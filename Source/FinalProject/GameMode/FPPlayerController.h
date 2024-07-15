@@ -24,10 +24,13 @@ protected:
 	virtual void SetupInputComponent() override;
 
 private:
-	void Input_Test(const FInputActionValue& InputValue);
+	void Input_Move(const FInputActionValue& InputValue);
+	void Input_Turn(const FInputActionValue& InputValue);
+	void Input_Jump(const FInputActionValue& InputValue);
+	void Input_Interaction(const FInputActionValue& InputValue);
 
 protected:
-	UPROPERTY(EditAnywhere, Category = Input)
+	/*UPROPERTY(EditAnywhere, Category = Input)
 		TObjectPtr<class UInputMappingContext> IMC_Quater;
 
 	UPROPERTY(EditAnywhere, Category = Input)
@@ -46,5 +49,5 @@ protected:
 		TObjectPtr<class UInputMappingContext> IMC_ThirdPersonJumpInteraction;
 
 	UPROPERTY(EditAnywhere, Category = Input)
-		TObjectPtr<class UInputAction> TestAction;
+		TObjectPtr<class UInputAction> TestAction;*/
 };

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameplayTagContainer.h"
+#include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 #include "FPInputData.generated.h"
 
@@ -15,10 +16,10 @@ struct FPInputAction
 	GENERATED_BODY()
 
 public:
-	UPROPERTY()
+	UPROPERTY(EditDefaultsOnly)
 	FGameplayTag InputTag = FGameplayTag::EmptyTag;
 
-	UPROPERTY()
+	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UInputAction> InputAction = nullptr;
 };
 /**
@@ -30,10 +31,13 @@ class FINALPROJECT_API UFPInputData : public UDataAsset
 	GENERATED_BODY()
 
 public:
+	const UInputAction* FindInputActionByTag(const FGameplayTag& InputTag) const;
+
+public:
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UInputMappingContext> InputMappingContext;
 	
 	UPROPERTY(EditDefaultsOnly)
-	TArray<FPInputAction>InputActions;
+	TArray<FPInputAction> InputActions;
 	//TArray<TObjectPtr<UInputAction>> InputActions;
 };
