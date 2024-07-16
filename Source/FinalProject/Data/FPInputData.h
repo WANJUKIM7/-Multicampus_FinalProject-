@@ -35,8 +35,23 @@ public:
 
 public:
 	UPROPERTY(EditDefaultsOnly)
-	TObjectPtr<UInputMappingContext> InputMappingContext;
+	TObjectPtr<UInputMappingContext> IMC_Quater;
 	
+	UPROPERTY(EditDefaultsOnly)
+		TObjectPtr<UInputMappingContext> IMC_QuaterJump;
+
+	UPROPERTY(EditDefaultsOnly)
+		TObjectPtr<UInputMappingContext> IMC_QuaterJumpInteraction;
+
+	UPROPERTY(EditDefaultsOnly)
+		TObjectPtr<UInputMappingContext> IMC_ThirdPerson;
+
+	UPROPERTY(EditDefaultsOnly)
+		TObjectPtr<UInputMappingContext> IMC_ThirdPersonJumpInteraction;
+
+	UPROPERTY(EditDefaultsOnly)
+		TObjectPtr<UInputMappingContext> IMC_ThirdPersonDoubleJumpInteraction;
+
 	UPROPERTY(EditDefaultsOnly)
 	TArray<FPInputAction> InputActions;
 	//TArray<TObjectPtr<UInputAction>> InputActions;

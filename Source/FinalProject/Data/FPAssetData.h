@@ -39,6 +39,7 @@ class FINALPROJECT_API UFPAssetData : public UPrimaryDataAsset
 	GENERATED_BODY()
 	
 public:
+	// Execute when save UPrimaryDataAsset.
 	virtual void PreSave(FObjectPreSaveContext ObjectSaveContext) override;
 
 public:

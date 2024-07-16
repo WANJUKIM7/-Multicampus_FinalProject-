@@ -6,6 +6,8 @@
 #include "GameFramework/GameModeBase.h"
 #include "FPGameMode.generated.h"
 
+class AFPPlayer;
+
 UCLASS(minimalapi)
 class AFPGameMode : public AGameModeBase
 {
@@ -13,6 +15,14 @@ class AFPGameMode : public AGameModeBase
 
 public:
 	AFPGameMode();
+
+	AFPPlayer* GetSpawnedPlayer() const;
+protected:
+	virtual void BeginPlay() override;
+
+private:
+	UPROPERTY()
+	AFPPlayer* SpawnedPlayer;
 };
 
 

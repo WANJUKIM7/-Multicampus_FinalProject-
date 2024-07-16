@@ -54,3 +54,8 @@ void AFPPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
+
+void AFPPlayer::SetGravityScale(float Value)
+{
+	GetCharacterMovement()->GravityScale = Value;
+}

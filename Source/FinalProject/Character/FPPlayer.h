@@ -23,6 +23,8 @@ protected:
 public:
 	virtual void Tick(float DeltaTime) override;
 
+	void SetGravityScale(float Value);
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<class USpringArmComponent> CameraBoom;

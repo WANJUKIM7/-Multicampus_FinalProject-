@@ -23,7 +23,7 @@ void AFPPlayerController::BeginPlay()
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
 		{
-			Subsystem->AddMappingContext(InputData->InputMappingContext, 0);
+			Subsystem->AddMappingContext(InputData->IMC_ThirdPerson, 0);
 		}
 	}
 }
@@ -49,6 +49,84 @@ void AFPPlayerController::SetupInputComponent()
 		EnhancedInputComponent->BindAction(Action4, ETriggerEvent::Triggered, this, &ThisClass::Input_Interaction);
 	}
 
+}
+
+void AFPPlayerController::ChangeMappingContextQuater()
+{
+	if (const UFPInputData* InputData = UFPAssetManager::GetAssetByName<UFPInputData>("InputData"))
+	{
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
+		{
+			Subsystem->ClearAllMappings();
+
+			Subsystem->AddMappingContext(InputData->IMC_Quater, 0);
+		}
+	}
+}
+
+void AFPPlayerController::ChangeMappingContextQuaterJump()
+{
+	if (const UFPInputData* InputData = UFPAssetManager::GetAssetByName<UFPInputData>("InputData"))
+	{
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
+		{
+			Subsystem->ClearAllMappings();
+
+			Subsystem->AddMappingContext(InputData->IMC_QuaterJump, 0);
+		}
+	}
+}
+
+void AFPPlayerController::ChangeMappingContextQuaterJumpInteraction()
+{
+	if (const UFPInputData* InputData = UFPAssetManager::GetAssetByName<UFPInputData>("InputData"))
+	{
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
+		{
+			Subsystem->ClearAllMappings();
+
+			Subsystem->AddMappingContext(InputData->IMC_QuaterJumpInteraction, 0);
+		}
+	}
+}
+
+void AFPPlayerController::ChangeMappingContextThirdPerson()
+{
+	if (const UFPInputData* InputData = UFPAssetManager::GetAssetByName<UFPInputData>("InputData"))
+	{
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
+		{
+			Subsystem->ClearAllMappings();
+
+			Subsystem->AddMappingContext(InputData->IMC_ThirdPerson, 0);
+		}
+	}
+}
+
+void AFPPlayerController::ChangeMappingContextThirdPersonDoubleJumpInteraction()
+{
+	if (const UFPInputData* InputData = UFPAssetManager::GetAssetByName<UFPInputData>("InputData"))
+	{
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
+		{
+			Subsystem->ClearAllMappings();
+
+			Subsystem->AddMappingContext(InputData->IMC_ThirdPersonDoubleJumpInteraction, 0);
+		}
+	}
+}
+
+void AFPPlayerController::ChangeMappingContextThirdPersonJump()
+{
+	if (const UFPInputData* InputData = UFPAssetManager::GetAssetByName<UFPInputData>("InputData"))
+	{
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
+		{
+			Subsystem->ClearAllMappings();
+
+			Subsystem->AddMappingContext(InputData->IMC_ThirdPersonJumpInteraction, 0);
+		}
+	}
 }
 
 void AFPPlayerController::Input_Move(const FInputActionValue& InputValue)
