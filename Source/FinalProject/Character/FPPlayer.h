@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "FinalProjectCharacter.h"
+#include "FPCharacter.h"
 #include "FPPlayer.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class FINALPROJECT_API AFPPlayer : public AFinalProjectCharacter
+class FINALPROJECT_API AFPPlayer : public AFPCharacter
 {
 	GENERATED_BODY()
 	
