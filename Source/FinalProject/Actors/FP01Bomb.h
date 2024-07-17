@@ -4,18 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "A05Train.generated.h"
-
-class UStaticMeshComponent;
+#include "FP01Bomb.generated.h"
 
 UCLASS()
-class FINALPROJECT_API AA05Train : public AActor
+class FINALPROJECT_API AFP01Bomb : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AA05Train();
+	AFP01Bomb();
 
 protected:
 	// Called when the game starts or when spawned
@@ -25,16 +23,15 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void ResetTimer();
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-		TObjectPtr<UStaticMeshComponent> Body;
+	TObjectPtr<UStaticMeshComponent> Bomb;
 
+public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-		TObjectPtr<UStaticMeshComponent> Wing;
-
+	bool bInteracting;
+		
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-		TObjectPtr<UStaticMeshComponent> Head;
-
-	UPROPERTY(EditAnywhere, Category = Battle)
-		TObjectPtr<class AActor> Target;
+	float TimeExplode;
 };

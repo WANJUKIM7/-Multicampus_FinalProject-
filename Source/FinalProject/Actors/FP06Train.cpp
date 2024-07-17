@@ -1,12 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "A05Train.h"
+#include "FP06Train.h"
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
-AA05Train::AA05Train()
+AFP06Train::AFP06Train()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -38,7 +38,7 @@ AA05Train::AA05Train()
 }
 
 // Called when the game starts or when spawned
-void AA05Train::BeginPlay()
+void AFP06Train::BeginPlay()
 {
 	Super::BeginPlay();
 	
@@ -53,7 +53,7 @@ void AA05Train::BeginPlay()
 }
 
 // Called every frame
-void AA05Train::Tick(float DeltaTime)
+void AFP06Train::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 

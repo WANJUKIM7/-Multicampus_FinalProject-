@@ -14,4 +14,15 @@ class FINALPROJECT_API AFPLevelDerived01 : public AFPLevelBase
 {
 	GENERATED_BODY()
 	
+public:
+	AFPLevelDerived01();
+
+protected:
+	virtual void BeginPlay() override;
+
+public:
+	virtual void Tick(float DeltaTime) override;
+
+protected:
+	virtual void SetMappingContext() override;
 };

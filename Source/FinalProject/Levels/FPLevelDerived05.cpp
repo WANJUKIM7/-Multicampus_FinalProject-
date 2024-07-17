@@ -3,3 +3,29 @@
 
 #include "Levels/FPLevelDerived05.h"
 
+AFPLevelDerived05::AFPLevelDerived05()
+	: Super()
+{
+}
+
+void AFPLevelDerived05::BeginPlay()
+{
+	SetMappingContext();
+	Super::BeginPlay();
+}
+
+void AFPLevelDerived05::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+}
+
+void AFPLevelDerived05::SetMappingContext()
+{
+	PlayerController = Cast<AFPPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
+    PlayerController->ChangeMappingContextThirdPerson();
+    PlayerController->DisableInput(PlayerController);
+}
+
+void AFPLevelDerived05::SpawnCamera()
+{
+}

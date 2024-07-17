@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Engine/LevelScriptActor.h"
+#include "Kismet/GameplayStatics.h"
+#include "Character/FPPlayerController.h"
 #include "FPLevelBase.generated.h"
 
 /**
@@ -27,8 +29,9 @@ protected:
 	class AFPPlayer* GetPlayerFromGameMode();
 	void StartFadeIn();
 	void PlayerSetting();
-	void SetMappingContext();
-	void SpawnCamera();
+	virtual void SetMappingContext();
+	virtual void SpawnCamera();
+	void SetTimer();
 	void SpawnPlayer();
 	void StartCountdown();
 	void DestroyCountdownWidget();

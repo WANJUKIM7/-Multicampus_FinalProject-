@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "MainActor.generated.h"
+#include "FP05InclinePlatform.generated.h"
 
 UCLASS()
-class FINALPROJECT_API AMainActor : public AActor
+class FINALPROJECT_API AFP05InclinePlatform : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AMainActor();
+	AFP05InclinePlatform();
 
 protected:
 	// Called when the game starts or when spawned
@@ -23,9 +23,4 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY()
-		TObjectPtr<class AFP06Train> Train;
-
-	UPROPERTY()
-		TSubclassOf<AFP06Train> ActorClass;
 };

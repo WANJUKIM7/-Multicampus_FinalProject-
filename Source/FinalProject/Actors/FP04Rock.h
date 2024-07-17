@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "MainActor.generated.h"
+#include "FP04Rock.generated.h"
 
 UCLASS()
-class FINALPROJECT_API AMainActor : public AActor
+class FINALPROJECT_API AFP04Rock : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AMainActor();
+	AFP04Rock();
 
 protected:
 	// Called when the game starts or when spawned
@@ -23,9 +23,4 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY()
-		TObjectPtr<class AFP06Train> Train;
-
-	UPROPERTY()
-		TSubclassOf<AFP06Train> ActorClass;
 };

@@ -4,9 +4,7 @@
 #include "Levels/FPLevelBase.h"
 #include "Character/FPPlayer.h"
 #include "GameMode/FPGameMode.h"
-#include "Kismet/GameplayStatics.h"
 #include "Camera/CameraActor.h"
-#include "Character/FPPlayerController.h"
 #include "Components/WidgetComponent.h"
 #include "UI/FPStartCountdownWidget.h"
 
@@ -20,13 +18,11 @@ AFPLevelBase::AFPLevelBase()
     , TimeGameStarts(8.0f)
 {
     // Countdown Widget
-	//Countdown = CreateDefaultSubobject<UWidgetComponent>(TEXT("Countdown"));
     ConstructorHelpers::FClassFinder<UUserWidget> CountdownWidgetClass(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Programming/UI/WB_Countdown.WB_Countdown_C'"));
     if (CountdownWidgetClass.Succeeded())
 	{
 		UE_LOG(LogTemp, Log, TEXT("CountdownWidgetClass.Succeeded"));
         CountdownWidgetClassReference = CountdownWidgetClass.Class;
-		//Countdown->SetWidgetClass(CountdownWidgetClass.Class);
 	}
 }
 
@@ -34,22 +30,10 @@ void AFPLevelBase::BeginPlay()
 {
     //StartFadeIn();
     PlayerSetting();
-    SetMappingContext();
+    //SetMappingContext();
     SpawnCamera();
+    SetTimer();
     
-    FTimerHandle CountdownStartHandle;
-    FTimerHandle GameStartHandle;
-    FTimerHandle PlayerControlable;
-
-    GetWorldTimerManager().SetTimer(
-        GameStartHandle, this, &AFPLevelBase::SpawnPlayer, TimeSpawnPlayer, false);
-
-    GetWorldTimerManager().SetTimer(
-        CountdownStartHandle, this, &AFPLevelBase::StartCountdown, TimeCountDownStarts, false);
-
-    GetWorldTimerManager().SetTimer(
-        PlayerControlable, this, &AFPLevelBase::PlayerControlable, TimeGameStarts, false);
-
     Super::BeginPlay();
 }
 
@@ -113,6 +97,22 @@ void AFPLevelBase::SpawnCamera()
     }
 }
 
+void AFPLevelBase::SetTimer()
+{
+    FTimerHandle CountdownStartHandle;
+    FTimerHandle GameStartHandle;
+    FTimerHandle PlayerControlable;
+
+    GetWorldTimerManager().SetTimer(
+        GameStartHandle, this, &AFPLevelBase::SpawnPlayer, TimeSpawnPlayer, false);
+
+    GetWorldTimerManager().SetTimer(
+        CountdownStartHandle, this, &AFPLevelBase::StartCountdown, TimeCountDownStarts, false);
+
+    GetWorldTimerManager().SetTimer(
+        PlayerControlable, this, &AFPLevelBase::PlayerControlable, TimeGameStarts, false);
+}
+
 void AFPLevelBase::SpawnPlayer()
 {
     UE_LOG(LogTemp, Log, TEXT("SpawnPlayer"));
@@ -123,10 +123,8 @@ void AFPLevelBase::SpawnPlayer()
 void AFPLevelBase::StartCountdown()
 {
     Countdown = NewObject<UWidgetComponent>(this, UWidgetComponent::StaticClass());
-    //Countdown = CreateDefaultSubobject<UWidgetComponent>(TEXT("Countdown"));
     Countdown->SetWidgetClass(CountdownWidgetClassReference);
     Countdown->RegisterComponent();
-    //Countdown->SetVisibility(true);
 
     if (UFPStartCountdownWidget* UI = Cast<UFPStartCountdownWidget>(Countdown->GetUserWidgetObject()))
 	{
