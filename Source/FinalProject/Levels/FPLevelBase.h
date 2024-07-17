@@ -25,11 +25,14 @@ public:
 
 protected:
 	class AFPPlayer* GetPlayerFromGameMode();
+	void StartFadeIn();
+	void PlayerSetting();
 	void SetMappingContext();
 	void SpawnCamera();
-	void StartFadeIn();
-
-	void TimerElapsed();
+	void SpawnPlayer();
+	void StartCountdown();
+	void DestroyCountdownWidget();
+	void PlayerControlable();
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -40,4 +43,19 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<class AFPPlayerController> PlayerController;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<class UWidgetComponent> Countdown;
+
+	UPROPERTY()
+	TSubclassOf<class UUserWidget> CountdownWidgetClassReference;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	float TimeSpawnPlayer;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	float TimeCountDownStarts;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	float TimeGameStarts;
 };

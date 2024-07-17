@@ -7,6 +7,8 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Components/WidgetComponent.h"
+#include "UI/FPPlayerNameWidget.h"
 
 AFPPlayer::AFPPlayer()
 {
@@ -42,12 +44,36 @@ AFPPlayer::AFPPlayer()
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
+
+	// Nickname Widget
+	Nickname = CreateDefaultSubobject<UWidgetComponent>(TEXT("Nickname"));
+	Nickname->SetupAttachment(GetRootComponent());
+
+	ConstructorHelpers::FClassFinder<UUserWidget> NicknameWidgetClass(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Programming/UI/WB_PlayerName.WB_PlayerName_C'"));
+	if (NicknameWidgetClass.Succeeded())
+	{
+		UE_LOG(LogTemp, Log, TEXT("NicknameWidgetClass.Succeeded"));
+		Nickname->SetWidgetClass(NicknameWidgetClass.Class);
+		Nickname->SetWidgetSpace(EWidgetSpace::Screen);
+		Nickname->SetDrawAtDesiredSize(true);
+		Nickname->SetRelativeLocation(FVector(0, 0, 100));
+	}
 }
 
 void AFPPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// Set Name UI
+	if (UFPPlayerNameWidget* Name = Cast<UFPPlayerNameWidget>(Nickname->GetUserWidgetObject()))
+	{
+		FText NewName = FText::FromString(TEXT("Player"));
+		Name->SetName(NewName);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("UI Failed"));
+	}
 }
 
 void AFPPlayer::Tick(float DeltaTime)

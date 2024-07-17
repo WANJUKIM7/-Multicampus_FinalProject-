@@ -10,6 +10,15 @@ public class FinalProject : ModuleRules
 
 		PublicIncludePaths.AddRange(new string[] { "FinalProject" });
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "GameplayTags" });
+		PublicDependencyModuleNames.AddRange(new string[]
+		{ 
+			"Core",
+			"CoreUObject",
+			"Engine",
+			"InputCore",
+			"EnhancedInput",
+			"GameplayTags",
+			"UMG"
+		});
 	}
 }

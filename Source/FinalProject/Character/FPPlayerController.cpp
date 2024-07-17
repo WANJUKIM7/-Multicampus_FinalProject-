@@ -18,12 +18,12 @@ AFPPlayerController::AFPPlayerController(const FObjectInitializer& ObjectInitial
 void AFPPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
 	if (const UFPInputData* InputData = UFPAssetManager::GetAssetByName<UFPInputData>("InputData"))
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
 		{
-			Subsystem->AddMappingContext(InputData->IMC_ThirdPerson, 0);
+			Subsystem->AddMappingContext(InputData->IMC_Quater, 0);
 		}
 	}
 }
@@ -48,7 +48,6 @@ void AFPPlayerController::SetupInputComponent()
 		auto Action4 = InputData->FindInputActionByTag(FPGameplayTags::Input_Action_Interaction);
 		EnhancedInputComponent->BindAction(Action4, ETriggerEvent::Triggered, this, &ThisClass::Input_Interaction);
 	}
-
 }
 
 void AFPPlayerController::ChangeMappingContextQuater()
@@ -60,6 +59,7 @@ void AFPPlayerController::ChangeMappingContextQuater()
 			Subsystem->ClearAllMappings();
 
 			Subsystem->AddMappingContext(InputData->IMC_Quater, 0);
+			UE_LOG(LogTemp, Log, TEXT("AFPPlayerController::ChangeMappingContextQuater()"));
 		}
 	}
 }
@@ -160,6 +160,7 @@ void AFPPlayerController::Input_Turn(const FInputActionValue& InputValue)
 	float ValY = InputValue.Get<FVector2D>().Y;
 	AddYawInput(ValX);
 	AddPitchInput(ValY);
+	UE_LOG(LogTemp, Log, TEXT("Input_Turn"));
 }
 
 void AFPPlayerController::Input_Jump(const FInputActionValue& InputValue)
