@@ -13,5 +13,23 @@ UCLASS()
 class FINALPROJECT_API UFPPlayerHPWidget : public UUserWidget
 {
 	GENERATED_BODY()
-	
+
+public:
+	UFPPlayerHPWidget(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+	virtual void NativeConstruct() override;
+
+	void UpdateHP();
+
+protected:
+	FTimerHandle PlayerHPTimerHandle;
+
+	UPROPERTY(meta=(BindWidget), BlueprintReadWrite)
+	TObjectPtr<class UImage> PlayerImage;
+
+	UPROPERTY(meta=(BindWidget), BlueprintReadWrite)
+	TObjectPtr<class UTextBlock> PlayerHP;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	int HP;
 };

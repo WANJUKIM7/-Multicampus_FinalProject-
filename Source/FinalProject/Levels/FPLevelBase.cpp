@@ -2,7 +2,6 @@
 
 
 #include "Levels/FPLevelBase.h"
-#include "Character/FPPlayer.h"
 #include "GameMode/FPGameMode.h"
 #include "Camera/CameraActor.h"
 #include "Components/WidgetComponent.h"
@@ -16,6 +15,8 @@ AFPLevelBase::AFPLevelBase()
     , TimeSpawnPlayer(1.0f)
     , TimeCountDownStarts(3.0f)
     , TimeGameStarts(8.0f)
+    , PlayerSpawnLocation(FVector(1000.0f, 1000.0f, 500.0f))
+    , CameraSpawnLocation(FVector{ -800.0f, 1000.0f, 1500.0f })
 {
     // Countdown Widget
     ConstructorHelpers::FClassFinder<UUserWidget> CountdownWidgetClass(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Programming/UI/WB_Countdown.WB_Countdown_C'"));
@@ -64,7 +65,7 @@ void AFPLevelBase::PlayerSetting()
     if (Player)
     {
         Player->GetController();
-        Player->SetActorLocation(FVector(1000.0f, 500.0f, 500.0f));
+        Player->SetActorLocation(PlayerSpawnLocation);
         Player->SetGravityScale(0.0f);
         Player->SetActorHiddenInGame(true);
         UE_LOG(LogTemp, Log, TEXT("Player obtained from GameMode: %s"), *Player->GetName());
@@ -84,7 +85,7 @@ void AFPLevelBase::SetMappingContext()
 
 void AFPLevelBase::SpawnCamera()
 {
-    FTransform Transform(FRotator{ -40.0f, 0.0f, 0.0f }, FVector{ 0.0f, 300.0f, 1500.0f }, FVector{ 1.0f, 1.0f, 1.0f });
+    FTransform Transform(FRotator{ -40.0f, 0.0f, 0.0f }, CameraSpawnLocation, FVector{ 1.0f, 1.0f, 1.0f });
     
     if (Camera = GetWorld()->SpawnActor<ACameraActor>())
     {
@@ -99,6 +100,7 @@ void AFPLevelBase::SpawnCamera()
 
 void AFPLevelBase::SetTimer()
 {
+    UE_LOG(LogTemp, Log, TEXT("AFPLevelBase::SetTimer"));
     FTimerHandle CountdownStartHandle;
     FTimerHandle GameStartHandle;
     FTimerHandle PlayerControlable;

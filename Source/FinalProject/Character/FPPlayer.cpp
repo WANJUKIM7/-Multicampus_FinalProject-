@@ -9,8 +9,12 @@
 #include "EnhancedInputSubsystems.h"
 #include "Components/WidgetComponent.h"
 #include "UI/FPPlayerNameWidget.h"
+#include "Kismet/GameplayStatics.h"
+#include "Engine/DirectionalLight.h"
+#include "Actors/FP07PointLight.h"
 
 AFPPlayer::AFPPlayer()
+	: HP(100.0f)
 {
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
@@ -84,4 +88,26 @@ void AFPPlayer::Tick(float DeltaTime)
 void AFPPlayer::SetGravityScale(float Value)
 {
 	GetCharacterMovement()->GravityScale = Value;
+}
+
+void AFPPlayer::SetViewReduction()
+{
+	TArray<AActor*> FoundActors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ADirectionalLight::StaticClass(), FoundActors);
+	for (AActor* Actor : FoundActors)
+    {
+        ADirectionalLight* DirLight = Cast<ADirectionalLight>(Actor);
+        if (DirLight)
+        {
+			DirLight->SetBrightness(0.0f);			
+        }
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("No Directional Light"));
+		}
+    }
+
+	PointLight = GetWorld()->SpawnActor<AFP07PointLight>(GetCapsuleComponent()->GetComponentLocation(), GetCapsuleComponent()->GetComponentRotation());
+	//PointLight->SetActorLocation(GetMesh()->GetComponentLocation());
+	PointLight->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale);
 }

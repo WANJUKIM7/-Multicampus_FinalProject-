@@ -24,13 +24,20 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void ResetTimer();
+
+private:
+	UFUNCTION()
+	void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<UStaticMeshComponent> Bomb;
 
 public:
+	//void AttachBombToComponent(USceneComponent* ParentComponent);
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	bool bInteracting;
+	bool IsInteracting;
 		
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	float TimeExplode;

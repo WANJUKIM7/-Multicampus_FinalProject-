@@ -25,4 +25,13 @@ public:
 
 protected:
 	virtual void SetMappingContext() override;
+
+public:
+	void SpawnBomb();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	TObjectPtr<class AFP01Bomb> Bomb;
+
+	UPROPERTY()
+	TSubclassOf<AFP01Bomb> BombClass;
 };

@@ -6,7 +6,9 @@
 #include "Engine/LevelScriptActor.h"
 #include "Kismet/GameplayStatics.h"
 #include "Character/FPPlayerController.h"
+#include "Character/FPPlayer.h"
 #include "FPLevelBase.generated.h"
+
 
 /**
  * 
@@ -50,8 +52,14 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<class UWidgetComponent> Countdown;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TSubclassOf<class UUserWidget> CountdownWidgetClassReference;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	FVector PlayerSpawnLocation;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	FVector CameraSpawnLocation;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float TimeSpawnPlayer;

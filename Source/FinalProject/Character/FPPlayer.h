@@ -24,7 +24,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void SetGravityScale(float Value);
+	void SetViewReduction();
 
+	float GetHP() { return HP; }
+	void SetHP(int NewHP) { HP = NewHP; }
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<class USpringArmComponent> CameraBoom;
@@ -36,4 +39,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<class UWidgetComponent> Nickname;
 
+	UPROPERTY()
+	TObjectPtr<class AFP07PointLight> PointLight;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float HP;
 };

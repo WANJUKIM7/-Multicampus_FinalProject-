@@ -25,4 +25,24 @@ public:
 
 protected:
 	virtual void SetMappingContext() override;
+
+public:
+	void SpawnPlayerHPUI();
+	void DarkChange();
+	void SpawnSpotLight();
+	void Phase2SpawnTimeSpotLight();
+	void Phase3SpawnTimeSpotLight();
+	void SetTimer();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<class UWidgetComponent> PlayerHP;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TSubclassOf<class UUserWidget> PlayerHPWidgetClassReference;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	FVector SpotLightCenterLocation;
+
+	UPROPERTY()
+	FTimerHandle SpawnSpotLightHandle;
 };

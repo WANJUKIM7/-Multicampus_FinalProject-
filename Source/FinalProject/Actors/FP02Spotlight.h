@@ -23,4 +23,36 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+private:
+	UFUNCTION()
+	void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+public:
+	void SetValues(FVector SpawnLocation);
+	void SetStartLocation();
+	void SetEndLocation();
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Light")
+	TObjectPtr<class USpotLightComponent> SpotLight;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision")
+	TObjectPtr<class USphereComponent> SphereCollision;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<class AFPPlayer> Player;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	FVector StartLocation;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	FVector EndLocation;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	int RandomInteger;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float PerDamage;
 };
+
