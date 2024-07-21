@@ -13,8 +13,8 @@ AFP06Tail::AFP06Tail()
 	Tail = CreateDefaultSubobject<USplineComponent>(TEXT("Tail"));
     RootComponent = Tail;
 
-    Tail->AddSplinePoint(FVector(0.0f, 0.0f, 0.0f), ESplineCoordinateSpace::Local, true);
-    Tail->AddSplinePoint(FVector(100.0f, 0.0f, 0.0f), ESplineCoordinateSpace::Local, true);
+    /*Tail->AddSplinePoint(FVector(0.0f, 0.0f, 0.0f), ESplineCoordinateSpace::World, true);
+    Tail->AddSplinePoint(FVector(100.0f, 0.0f, 0.0f), ESplineCoordinateSpace::World, true);*/
 
     Tail->UpdateSpline();
 }

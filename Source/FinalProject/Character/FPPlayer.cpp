@@ -15,8 +15,6 @@
 #include "Actors/FP07PointLight.h"
 
 AFPPlayer::AFPPlayer()
-	: HP(100.0f)
-	, SpotLightCounts(0)
 {
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
@@ -141,6 +139,17 @@ void AFPPlayer::SpawnPlayerHPUI()
 void AFPPlayer::UpdateHPUI(float NewHP)
 {
 	PlayerHPUI->UpdateHP(NewHP);
+}
+
+void AFPPlayer::DestroyPlayer()
+{
+
+	if (IsValid(this))
+	{
+		APlayerController* PlayerController = Cast<APlayerController>(GetController());	
+		PlayerController->DisableInput(PlayerController);
+		Destroy();
+	}
 }
 
 //void AFPPlayer::SpawnSpline_Implementation()

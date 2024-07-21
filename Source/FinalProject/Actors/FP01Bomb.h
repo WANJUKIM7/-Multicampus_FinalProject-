@@ -34,8 +34,6 @@ protected:
 	TObjectPtr<UStaticMeshComponent> Bomb;
 
 public:
-	//void AttachBombToComponent(USceneComponent* ParentComponent);
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	bool IsInteracting;
 		

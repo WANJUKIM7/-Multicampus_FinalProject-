@@ -36,4 +36,6 @@ void UFPAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 	bShouldMove = (GroundSpeed > 3.0f && MovementComponent->GetCurrentAcceleration() != FVector::ZeroVector);
 	bIsFalling = MovementComponent->IsFalling();
+
+	bIsInteracting = Character->GetIsInteracting();
 }

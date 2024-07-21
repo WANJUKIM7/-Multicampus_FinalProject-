@@ -6,6 +6,15 @@
 #include "FPCharacter.h"
 #include "FPPlayer.generated.h"
 
+UENUM(BlueprintType)
+enum class ECurrentLevel : uint8
+{
+	E_Level01 UMETA(DisplayName = "Level01"),
+	E_Level02 UMETA(DisplayName = "Level02"),
+	E_Level03 UMETA(DisplayName = "Level03"),
+	E_Level06 UMETA(DisplayName = "Level06")
+};
+
 /**
  * 
  */
@@ -31,12 +40,15 @@ public:
 	float GetHP() { return HP; }
 	void SetHP(float NewHP) { /*if (SpotLightCounts == 0) return;*/ HP = NewHP; }
 
+	bool GetIsInteracting() { return bIsInteracting; }
+	void SetIsInteracting(bool IsInteracting) {  bIsInteracting = IsInteracting; }
+
+	bool GetIsAttachedBomb() { return bIsAttachedBomb; }
+	void SetIsAttachedBomb(bool IsAttachedBomb) {  bIsAttachedBomb = IsAttachedBomb; }
+
 	int GetSpotLightCounts() { return SpotLightCounts; }
 	void SetSpotLightCounts(int NewSpotLightCounts) { SpotLightCounts = NewSpotLightCounts; }
 
-	/*UFUNCTION(BlueprintNativeEvent)
-	void SpawnSpline();
-	virtual void SpawnSpline_Implementation();*/
 protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -46,6 +58,9 @@ protected:
 	TObjectPtr<class UCameraComponent> FollowCamera;
 
 public:
+	UFUNCTION(BlueprintCallable)
+	void DestroyPlayer();
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<class UWidgetComponent> NicknameUI;
 
@@ -55,12 +70,21 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TSubclassOf<class UUserWidget> PlayerHPWidgetClassReference;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	ECurrentLevel E_CurrentLevel;
+
 	UPROPERTY()
 	TObjectPtr<class AFP07PointLight> PointLight;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	int SpotLightCounts;
+	int SpotLightCounts = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float HP;
+	float HP = 100.0f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool bIsInteracting = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool bIsAttachedBomb = false;
 };

@@ -30,5 +30,5 @@ protected:
 		TObjectPtr<UStaticMeshComponent> Train;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-		float Speed;
+		float Speed = 25.0f;
 };

@@ -9,6 +9,7 @@
 #include "Data/FPInputData.h"
 #include "FPGameplayTags.h"
 #include "FPCharacter.h"
+#include "FPPlayer.h"
 
 AFPPlayerController::AFPPlayerController(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -173,6 +174,11 @@ void AFPPlayerController::Input_Jump(const FInputActionValue& InputValue)
 
 void AFPPlayerController::Input_Interaction(const FInputActionValue& InputValue)
 {
+	/*if (AFPPlayer* MyPlayer = Cast<AFPPlayer>(GetPawn()))
+	{
+		if (MyPlayer->GetIsInteracting() == false)
+			MyPlayer->SetIsInteracting(true);
+	}*/
 	UE_LOG(LogTemp, Log, TEXT("Interaction"));
 }
 

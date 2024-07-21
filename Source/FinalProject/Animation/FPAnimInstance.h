@@ -40,4 +40,7 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly)
 	bool bIsFalling = false;
+
+	UPROPERTY(BlueprintReadWrite)
+	bool bIsInteracting = false;
 };

@@ -9,6 +9,7 @@ AFPLevelDerived01::AFPLevelDerived01()
 	, Bomb(nullptr)
 	, BombClass(nullptr)
 {
+	CameraSpawnLocation = FVector(0.0f, 800.0f, 300.0f);
 }
 
 void AFPLevelDerived01::BeginPlay()
@@ -41,7 +42,8 @@ void AFPLevelDerived01::SpawnBomb()
 	if (Bomb = GetWorld()->SpawnActor<AFP01Bomb>())
 	{
 		Bomb->AttachToComponent(Player.Get()->GetMesh(),FAttachmentTransformRules::KeepRelativeTransform, FName("bomb"));
-		Player->SetViewReduction();
+		Player->SetIsAttachedBomb(true);
+		//Player->SetViewReduction();
 	}
 	else
 	{

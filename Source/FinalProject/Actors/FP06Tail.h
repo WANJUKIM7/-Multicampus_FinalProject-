@@ -28,5 +28,5 @@ protected:
     TObjectPtr<class USplineComponent> Tail;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float LifeSpan;
+	float TimeLifeSpan = 1.0f;
 };
