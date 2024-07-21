@@ -2,22 +2,17 @@
 
 
 #include "Levels/FPLevelDerived02.h"
-#include "Components/WidgetComponent.h"
-#include "UI/FPPlayerHPWidget.h"
 #include "Engine/DirectionalLight.h"
 #include "Actors/FP02Spotlight.h"
 
 AFPLevelDerived02::AFPLevelDerived02()
 	: Super()
-	, PlayerHP(nullptr)
-	, SpotLightCenterLocation(FVector(1000.0f, 1000.0f, 320.0f))
+	, SpotLightCenterLocation(FVector(500.0f, 500.0f, 320.0f))
 {
-	// Countdown Widget
-    ConstructorHelpers::FClassFinder<UUserWidget> PlayerHPWidgetClass(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Programming/UI/WB_PlayerHP.WB_PlayerHP_C'"));
-    if (PlayerHPWidgetClass.Succeeded())
+	ConstructorHelpers::FClassFinder<AFP02Spotlight> FindClass(TEXT("/Script/Engine.Blueprint'/Game/Programming/Blueprints/BP_02_SpotLight.BP_02_SpotLight_C'"));
+	if (FindClass.Succeeded())
 	{
-		UE_LOG(LogTemp, Log, TEXT("PlayerHPWidgetClass.Succeeded"));
-        PlayerHPWidgetClassReference = PlayerHPWidgetClass.Class;
+		ActorClass = FindClass.Class;
 	}
 }
 
@@ -41,22 +36,6 @@ void AFPLevelDerived02::SetMappingContext()
     PlayerController->DisableInput(PlayerController);
 }
 
-void AFPLevelDerived02::SpawnPlayerHPUI()
-{
-	PlayerHP = NewObject<UWidgetComponent>(this, UWidgetComponent::StaticClass());
-    PlayerHP->SetWidgetClass(PlayerHPWidgetClassReference);
-    PlayerHP->RegisterComponent();
-
-    if (UFPPlayerHPWidget* UI = Cast<UFPPlayerHPWidget>(PlayerHP->GetUserWidgetObject()))
-	{
-        UI->AddToViewport();
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("PlayerHP UI Failed"));
-	}
-}
-
 void AFPLevelDerived02::DarkChange()
 {
 	TArray<AActor*> FoundActors;
@@ -77,7 +56,10 @@ void AFPLevelDerived02::DarkChange()
 
 void AFPLevelDerived02::SpawnSpotLight()
 {
-	AFP02Spotlight* Light = GetWorld()->SpawnActor<AFP02Spotlight>();
+	FVector Location(-1000.0f, -1000.0f, -1000.0f);
+	FRotator Rotation(0.0f, 0.0f, 0.0f);
+	//AFP02Spotlight* Light = GetWorld()->SpawnActor<AFP02Spotlight>(Location, Rotation);
+	AFP02Spotlight* Light = Cast<AFP02Spotlight>(GetWorld()->SpawnActor(ActorClass));
 	Light->SetValues(SpotLightCenterLocation);
 	//UE_LOG(LogTemp, Log, TEXT("SpawnSpotLight"));
 }
@@ -113,10 +95,10 @@ void AFPLevelDerived02::SetTimer()
 	FTimerHandle Phase3SpawnTimeSpotLightHandle;
 
     GetWorldTimerManager().SetTimer(
-        SpawnPlayerHPUIHandle, this, &AFPLevelDerived02::SpawnPlayerHPUI, TimeGameStarts, false);
+        SpawnPlayerHPUIHandle, Player.Get(), &AFPPlayer::SpawnPlayerHPUI, TimeGameStarts, false);
 	
-	GetWorldTimerManager().SetTimer(
-        DarkChangeHandle, this, &AFPLevelDerived02::DarkChange, TimeGameStarts, false);
+	/*GetWorldTimerManager().SetTimer(
+        DarkChangeHandle, this, &AFPLevelDerived02::DarkChange, TimeGameStarts, false);*/
 
 	GetWorldTimerManager().SetTimer(
         SpawnSpotLightHandle, this, &AFPLevelDerived02::SpawnSpotLight, 0.5f, true, TimeGameStarts);

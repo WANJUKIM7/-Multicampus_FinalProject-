@@ -27,4 +27,12 @@ protected:
 	virtual void SetMappingContext() override;
 	virtual void SpawnCamera() override;
 	
+public:
+	void BreakPlatforms();
+
+	/*UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	TArray<TSubclassOf<class AFP03Platform>> Platforms;*/
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float TimePlatformsBreakLoop;
 };

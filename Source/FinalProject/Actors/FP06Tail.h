@@ -23,4 +23,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    TObjectPtr<class USplineComponent> Tail;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float LifeSpan;
 };

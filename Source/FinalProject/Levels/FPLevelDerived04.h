@@ -25,4 +25,25 @@ public:
 
 protected:
 	virtual void SetMappingContext() override;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	FVector RockSpawnLocationStart;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	FVector RockSpawnLocationEnd;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float TimeFirstPhaseSpawn;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float TimeSecondPhaseSpawn;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float TimeThirdPhaseSpawn;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float TimeChangeSpawnLoop1;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float TimeChangeSpawnLoop2;
 };

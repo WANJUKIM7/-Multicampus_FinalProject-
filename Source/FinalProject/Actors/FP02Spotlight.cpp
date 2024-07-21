@@ -9,7 +9,7 @@
 // Sets default values
 AFP02Spotlight::AFP02Spotlight()
 	: Player(nullptr)
-	, PerDamage(0.1f)
+	, PerDamage(5.0f)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -30,7 +30,7 @@ AFP02Spotlight::AFP02Spotlight()
 	SphereCollision->SetHiddenInGame(false);
 
 	StartLocation = FVector(1301.0f, 1080.0f, 650.0f);
-	EndLocation = FVector(0.0f, 0.0f, 0.0f);
+	EndLocation = FVector(1000.0f, 1000.0f, 1500.0f);
 	RandomInteger = 0;
 }
 
@@ -40,6 +40,7 @@ void AFP02Spotlight::BeginPlay()
 	Super::BeginPlay();
 	
 	SetLifeSpan(10.0f);
+	SetActorLocation(FVector(0.0f, 0.0f, 320.0f));
 
 	SphereCollision->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnBeginOverlap);
 	SphereCollision->OnComponentEndOverlap.AddDynamic(this, &ThisClass::OnEndOverlap);
@@ -54,20 +55,32 @@ void AFP02Spotlight::Tick(float DeltaTime)
 	if (Player)
 	{
 		float NewHP = 0.0f;
-		NewHP = FMath::Clamp(NewHP, 0.0f, Player->GetHP() - PerDamage);
+		NewHP = FMath::Clamp(Player->GetHP() - PerDamage, 0.0f, Player->GetHP() - PerDamage);
 		Player->SetHP(NewHP);
+		Player->UpdateHPUI(NewHP);
+		//UE_LOG(LogTemp, Log, TEXT("AFP02Spotlight::Tick"));
 	}
 }
 
 void AFP02Spotlight::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	Player = Cast<AFPPlayer>(OtherActor);
-	//UE_LOG(LogTemp, Log, TEXT("AFP02Spotlight::OnBeginOverlap"));
+	if (Player = Cast<AFPPlayer>(OtherActor))
+	{
+		/*UE_LOG(LogTemp, Log, TEXT("AFP02Spotlight::OnBeginOverlap"));
+		UE_LOG(LogTemp, Log, TEXT("OtherActor->Name: %s"), *OtherActor->GetClass()->GetName());*/
+	}
+	
+	//Player->SetSpotLightCounts(Player->GetSpotLightCounts() + 1u);
 }
 
 void AFP02Spotlight::OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	Player = nullptr;
+	if (Player = Cast<AFPPlayer>(OtherActor))
+	{
+		Player = nullptr;
+		//UE_LOG(LogTemp, Log, TEXT("AFP02Spotlight::OnEndOverlap"));
+	}
+	//Player->SetSpotLightCounts(Player->GetSpotLightCounts() - 1u);
 }
 
 void AFP02Spotlight::SetValues(FVector SpawnLocation)

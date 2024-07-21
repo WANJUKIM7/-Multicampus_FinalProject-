@@ -6,6 +6,7 @@
 AFPLevelDerived05::AFPLevelDerived05()
 	: Super()
 {
+	PlayerSpawnLocation = FVector(0.0f, 0.0f, 0.0f);
 }
 
 void AFPLevelDerived05::BeginPlay()

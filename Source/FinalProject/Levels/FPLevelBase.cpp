@@ -8,7 +8,7 @@
 #include "UI/FPStartCountdownWidget.h"
 
 AFPLevelBase::AFPLevelBase()
-	: Player(nullptr)
+    : Player(nullptr)
     , Camera(nullptr)
     , PlayerController(nullptr)
     , Countdown(nullptr)
@@ -16,7 +16,8 @@ AFPLevelBase::AFPLevelBase()
     , TimeCountDownStarts(3.0f)
     , TimeGameStarts(8.0f)
     , PlayerSpawnLocation(FVector(1000.0f, 1000.0f, 500.0f))
-    , CameraSpawnLocation(FVector{ -800.0f, 1000.0f, 1500.0f })
+    //, CameraSpawnLocation(FVector(0.0f, 800.0f, 700.0f))
+    , CameraSpawnRotation(FRotator(-40.0f, 0.0f, 0.0f))
 {
     // Countdown Widget
     ConstructorHelpers::FClassFinder<UUserWidget> CountdownWidgetClass(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Programming/UI/WB_Countdown.WB_Countdown_C'"));
@@ -25,6 +26,8 @@ AFPLevelBase::AFPLevelBase()
 		UE_LOG(LogTemp, Log, TEXT("CountdownWidgetClass.Succeeded"));
         CountdownWidgetClassReference = CountdownWidgetClass.Class;
 	}
+
+    CameraSpawnLocation = FVector(-700.0f, 780.0f, 1000.0f);
 }
 
 void AFPLevelBase::BeginPlay()
@@ -85,7 +88,7 @@ void AFPLevelBase::SetMappingContext()
 
 void AFPLevelBase::SpawnCamera()
 {
-    FTransform Transform(FRotator{ -40.0f, 0.0f, 0.0f }, CameraSpawnLocation, FVector{ 1.0f, 1.0f, 1.0f });
+    FTransform Transform(CameraSpawnRotation, CameraSpawnLocation, FVector{ 1.0f, 1.0f, 1.0f });
     
     if (Camera = GetWorld()->SpawnActor<ACameraActor>())
     {
@@ -112,14 +115,17 @@ void AFPLevelBase::SetTimer()
         CountdownStartHandle, this, &AFPLevelBase::StartCountdown, TimeCountDownStarts, false);
 
     GetWorldTimerManager().SetTimer(
-        PlayerControlable, this, &AFPLevelBase::PlayerControlable, TimeGameStarts, false);
+        PlayerControlable, this, &AFPLevelBase::PlayerControlable, 1.0f, false);
 }
 
 void AFPLevelBase::SpawnPlayer()
 {
     UE_LOG(LogTemp, Log, TEXT("SpawnPlayer"));
-    Player->SetGravityScale(1.75f);
-    Player->SetActorHiddenInGame(false);
+    if (Player)
+    {
+        Player->SetGravityScale(1.75f);
+        Player->SetActorHiddenInGame(false);
+    }
 }
 
 void AFPLevelBase::StartCountdown()

@@ -5,7 +5,16 @@
 
 AFPLevelDerived04::AFPLevelDerived04()
 	: Super()
+	, RockSpawnLocationStart(1680.0f, 750.0f, 980.0f)
+	, RockSpawnLocationEnd(1680.0f, 1910.0f, 980.0f)
+	, TimeFirstPhaseSpawn(0.5f)
+	, TimeSecondPhaseSpawn(0.2f)
+	, TimeThirdPhaseSpawn(0.1f)
+	, TimeChangeSpawnLoop1(10.0f)
+	, TimeChangeSpawnLoop2(20.0f)
 {
+	CameraSpawnLocation = FVector(-880.0f, 1310.0f, 1000.0f);
+	CameraSpawnRotation = FRotator(0.0f, 0.0f, 0.0f);
 }
 
 void AFPLevelDerived04::BeginPlay()

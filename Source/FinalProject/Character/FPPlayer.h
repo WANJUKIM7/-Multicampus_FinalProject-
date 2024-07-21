@@ -25,10 +25,20 @@ public:
 
 	void SetGravityScale(float Value);
 	void SetViewReduction();
+	void SpawnPlayerHPUI();
+	void UpdateHPUI(float NewHP);
 
 	float GetHP() { return HP; }
-	void SetHP(int NewHP) { HP = NewHP; }
+	void SetHP(float NewHP) { /*if (SpotLightCounts == 0) return;*/ HP = NewHP; }
+
+	int GetSpotLightCounts() { return SpotLightCounts; }
+	void SetSpotLightCounts(int NewSpotLightCounts) { SpotLightCounts = NewSpotLightCounts; }
+
+	/*UFUNCTION(BlueprintNativeEvent)
+	void SpawnSpline();
+	virtual void SpawnSpline_Implementation();*/
 protected:
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<class USpringArmComponent> CameraBoom;
 
@@ -37,10 +47,19 @@ protected:
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TObjectPtr<class UWidgetComponent> Nickname;
+	TObjectPtr<class UWidgetComponent> NicknameUI;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<class UFPPlayerHPWidget> PlayerHPUI;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TSubclassOf<class UUserWidget> PlayerHPWidgetClassReference;
 
 	UPROPERTY()
 	TObjectPtr<class AFP07PointLight> PointLight;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int SpotLightCounts;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float HP;

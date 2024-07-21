@@ -19,7 +19,7 @@ public:
 
 	virtual void NativeConstruct() override;
 
-	void UpdateHP();
+	void UpdateHP(float NewHP);
 
 protected:
 	FTimerHandle PlayerHPTimerHandle;

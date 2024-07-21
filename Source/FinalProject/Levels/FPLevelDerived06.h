@@ -25,4 +25,7 @@ public:
 
 protected:
 	virtual void SetMappingContext() override;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float TimeTrainLoopTime;
 };

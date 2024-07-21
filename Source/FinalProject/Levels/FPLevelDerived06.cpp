@@ -5,6 +5,7 @@
 
 AFPLevelDerived06::AFPLevelDerived06()
 	: Super()
+	, TimeTrainLoopTime(5.0f)
 {
 }
 

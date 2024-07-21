@@ -18,10 +18,11 @@ void UFPPlayerHPWidget::NativeConstruct()
 	Super::NativeConstruct();
 }
 
-void UFPPlayerHPWidget::UpdateHP()
+void UFPPlayerHPWidget::UpdateHP(float NewHP)
 {
+	HP = (int)NewHP;
 	if (PlayerHP)
 	{
-		PlayerHP->SetText(FText::AsNumber(FMath::Max(0.0f, HP)));
+		PlayerHP->SetText(FText::AsNumber(FMath::Max(0, HP)));
 	}
 }

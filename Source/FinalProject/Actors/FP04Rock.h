@@ -23,4 +23,24 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+private:
+	UFUNCTION()
+	void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	TObjectPtr<UStaticMeshComponent> Rock;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<class USphereComponent> SphereCollision;
+
+public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	FVector SizeSmall;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	FVector SizeMiddle;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	FVector SizeLarge;
 };

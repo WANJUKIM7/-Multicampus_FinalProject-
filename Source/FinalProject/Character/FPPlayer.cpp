@@ -9,12 +9,14 @@
 #include "EnhancedInputSubsystems.h"
 #include "Components/WidgetComponent.h"
 #include "UI/FPPlayerNameWidget.h"
+#include "UI/FPPlayerHPWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine/DirectionalLight.h"
 #include "Actors/FP07PointLight.h"
 
 AFPPlayer::AFPPlayer()
 	: HP(100.0f)
+	, SpotLightCounts(0)
 {
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
@@ -50,17 +52,25 @@ AFPPlayer::AFPPlayer()
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
 
 	// Nickname Widget
-	Nickname = CreateDefaultSubobject<UWidgetComponent>(TEXT("Nickname"));
-	Nickname->SetupAttachment(GetRootComponent());
+	NicknameUI = CreateDefaultSubobject<UWidgetComponent>(TEXT("Nickname"));
+	NicknameUI->SetupAttachment(GetRootComponent());
 
 	ConstructorHelpers::FClassFinder<UUserWidget> NicknameWidgetClass(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Programming/UI/WB_PlayerName.WB_PlayerName_C'"));
 	if (NicknameWidgetClass.Succeeded())
 	{
 		UE_LOG(LogTemp, Log, TEXT("NicknameWidgetClass.Succeeded"));
-		Nickname->SetWidgetClass(NicknameWidgetClass.Class);
-		Nickname->SetWidgetSpace(EWidgetSpace::Screen);
-		Nickname->SetDrawAtDesiredSize(true);
-		Nickname->SetRelativeLocation(FVector(0, 0, 100));
+		NicknameUI->SetWidgetClass(NicknameWidgetClass.Class);
+		NicknameUI->SetWidgetSpace(EWidgetSpace::Screen);
+		NicknameUI->SetDrawAtDesiredSize(true);
+		NicknameUI->SetRelativeLocation(FVector(0, 0, 100));
+	}
+
+	// HP Widget
+    ConstructorHelpers::FClassFinder<UUserWidget> PlayerHPWidgetClass(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Programming/UI/WB_PlayerHP.WB_PlayerHP_C'"));
+    if (PlayerHPWidgetClass.Succeeded())
+	{
+		UE_LOG(LogTemp, Log, TEXT("PlayerHPWidgetClass.Succeeded"));
+        PlayerHPWidgetClassReference = PlayerHPWidgetClass.Class;
 	}
 }
 
@@ -69,7 +79,7 @@ void AFPPlayer::BeginPlay()
 	Super::BeginPlay();
 
 	// Set Name UI
-	if (UFPPlayerNameWidget* Name = Cast<UFPPlayerNameWidget>(Nickname->GetUserWidgetObject()))
+	if (UFPPlayerNameWidget* Name = Cast<UFPPlayerNameWidget>(NicknameUI->GetUserWidgetObject()))
 	{
 		FText NewName = FText::FromString(TEXT("Player"));
 		Name->SetName(NewName);
@@ -111,3 +121,28 @@ void AFPPlayer::SetViewReduction()
 	//PointLight->SetActorLocation(GetMesh()->GetComponentLocation());
 	PointLight->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale);
 }
+
+void AFPPlayer::SpawnPlayerHPUI()
+{
+	TObjectPtr<UWidgetComponent> UI = NewObject<UWidgetComponent>(this, UWidgetComponent::StaticClass());
+    UI->SetWidgetClass(PlayerHPWidgetClassReference);
+    UI->RegisterComponent();
+
+    if (PlayerHPUI = Cast<UFPPlayerHPWidget>(UI->GetUserWidgetObject()))
+	{
+        PlayerHPUI->AddToViewport();
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("PlayerHP UI Failed"));
+	}
+}
+
+void AFPPlayer::UpdateHPUI(float NewHP)
+{
+	PlayerHPUI->UpdateHP(NewHP);
+}
+
+//void AFPPlayer::SpawnSpline_Implementation()
+//{
+//}

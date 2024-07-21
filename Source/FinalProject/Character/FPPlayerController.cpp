@@ -160,7 +160,7 @@ void AFPPlayerController::Input_Turn(const FInputActionValue& InputValue)
 	float ValY = InputValue.Get<FVector2D>().Y;
 	AddYawInput(ValX);
 	AddPitchInput(ValY);
-	UE_LOG(LogTemp, Log, TEXT("Input_Turn"));
+	//UE_LOG(LogTemp, Log, TEXT("Input_Turn"));
 }
 
 void AFPPlayerController::Input_Jump(const FInputActionValue& InputValue)

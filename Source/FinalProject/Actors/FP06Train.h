@@ -27,14 +27,8 @@ public:
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-		TObjectPtr<UStaticMeshComponent> Body;
+		TObjectPtr<UStaticMeshComponent> Train;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-		TObjectPtr<UStaticMeshComponent> Wing;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-		TObjectPtr<UStaticMeshComponent> Head;
-
-	UPROPERTY(EditAnywhere, Category = Battle)
-		TObjectPtr<class AActor> Target;
+		float Speed;
 };

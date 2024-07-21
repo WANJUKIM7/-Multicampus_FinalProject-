@@ -10,11 +10,11 @@ AMainActor::AMainActor()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	ConstructorHelpers::FClassFinder<AFP06Train> FindClass(TEXT("/Script/Engine.Blueprint'/Game/Programming/Blueprints/BP_05_Train.BP_05_Train_C'"));
+	/*ConstructorHelpers::FClassFinder<AFP06Train> FindClass(TEXT("/Script/Engine.Blueprint'/Game/Programming/Blueprints/BP_05_Train.BP_05_Train_C'"));
 	if (FindClass.Succeeded())
 	{
 		ActorClass = FindClass.Class;
-	}
+	}*/
 }
 
 // Called when the game starts or when spawned
@@ -26,7 +26,7 @@ void AMainActor::BeginPlay()
 	FRotator Rotation(0, 0, 0);
 
 	//AA05Train* Train = GetWorld()->SpawnActor<AA05Train>(Location, Rotation);
-	Train = Cast<AFP06Train>(GetWorld()->SpawnActor(ActorClass));
+	//Train = Cast<AFP06Train>(GetWorld()->SpawnActor(ActorClass));
 
 	//Train->SetLifeSpan(5.0f);
 }
