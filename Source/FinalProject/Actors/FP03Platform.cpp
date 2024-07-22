@@ -9,12 +9,6 @@
 
 // Sets default values
 AFP03Platform::AFP03Platform()
-	: IsTimePassed(false)
-	, Durability(2)
-	, TimeAfterDuration(3.0f)
-	, IsShaking(false)
-	, ShakingDuration(1.0f)
-	, ElapsedShakingTime(0.0f)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;

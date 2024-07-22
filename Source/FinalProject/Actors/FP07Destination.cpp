@@ -2,6 +2,7 @@
 
 
 #include "Actors/FP07Destination.h"
+#include "Components/BoxComponent.h"
 
 // Sets default values
 AFP07Destination::AFP07Destination()
@@ -9,6 +10,11 @@ AFP07Destination::AFP07Destination()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
+	RootComponent = BoxCollision;
+	BoxCollision->SetCollisionProfileName(TEXT("OverlapAll"));
+	BoxCollision->SetRelativeScale3D(FVector(2.0f, 2.0f, 2.0f));
+	BoxCollision->SetHiddenInGame(false);
 }
 
 // Called when the game starts or when spawned

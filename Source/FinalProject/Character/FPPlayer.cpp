@@ -143,7 +143,6 @@ void AFPPlayer::UpdateHPUI(float NewHP)
 
 void AFPPlayer::DestroyPlayer()
 {
-
 	if (IsValid(this))
 	{
 		APlayerController* PlayerController = Cast<APlayerController>(GetController());	

@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "FP08CannonBall.generated.h"
+#include "FP08RotateAuto.generated.h"
 
 UCLASS()
-class FINALPROJECT_API AFP08CannonBall : public AActor
+class FINALPROJECT_API AFP08RotateAuto : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AFP08CannonBall();
+	AFP08RotateAuto();
 
 protected:
 	// Called when the game starts or when spawned
@@ -25,14 +25,8 @@ public:
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	TObjectPtr<UStaticMeshComponent> CannonBall = nullptr;
+	TObjectPtr<UStaticMeshComponent> Platform;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float CannonBallScale = 1.0f;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float ForwardForceValue = 50.0f;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	FVector ForwardVector = FVector(0.0f, 0.0f, 0.0f);
+	float RotationSpeed = 1.0f;
 };

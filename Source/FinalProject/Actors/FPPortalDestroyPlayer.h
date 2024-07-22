@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "FP07Destination.generated.h"
+#include "FPPortalDestroyPlayer.generated.h"
 
 UCLASS()
-class FINALPROJECT_API AFP07Destination : public AActor
+class FINALPROJECT_API AFPPortalDestroyPlayer : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AFP07Destination();
+	AFPPortalDestroyPlayer();
 
 protected:
 	// Called when the game starts or when spawned
@@ -23,7 +23,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision")
-	TObjectPtr<class UBoxComponent> BoxCollision;
+private:
+	UPROPERTY(VisibleAnywhere)
+    TObjectPtr<class UParticleSystemComponent> ParticleSystem;
 };

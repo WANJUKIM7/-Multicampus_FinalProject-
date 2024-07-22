@@ -9,6 +9,16 @@ AFP08CannonBall::AFP08CannonBall()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	CannonBall = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CannonBall"));
+	RootComponent = CannonBall;
+
+	ConstructorHelpers::FObjectFinder<UStaticMesh> FindMesh(TEXT("/Script/Engine.StaticMesh'/Engine/BasicShapes/Cylinder.Cylinder'"));
+	if (FindMesh.Succeeded())
+	{
+		CannonBall->SetStaticMesh(FindMesh.Object);
+	}
+	CannonBall->SetSimulatePhysics(true);
+	
 }
 
 // Called when the game starts or when spawned

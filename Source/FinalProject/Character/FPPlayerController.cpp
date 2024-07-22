@@ -133,12 +133,8 @@ void AFPPlayerController::ChangeMappingContextThirdPersonJump()
 void AFPPlayerController::Input_Move(const FInputActionValue& InputValue)
 {
 	FVector2D MovementVector = InputValue.Get<FVector2D>();
-
 	if (MovementVector.X != 0)
 	{
-		//FVector Direction = FVector::ForwardVector * MovementVector.X;
-		//GetPawn()->AddActorWorldOffset(Direction * 50.f); // * DeltaTime
-
 		FRotator Rotator = GetControlRotation();
 		FVector Direction = UKismetMathLibrary::GetForwardVector(FRotator(0, Rotator.Yaw, 0));
 		GetPawn()->AddMovementInput(Direction, MovementVector.X);
@@ -146,13 +142,11 @@ void AFPPlayerController::Input_Move(const FInputActionValue& InputValue)
 
 	if (MovementVector.Y != 0)
 	{
-		//FVector Direction = FVector::RightVector * MovementVector.Y;
-		//GetPawn()->AddActorWorldOffset(Direction * 50.f); // * DeltaTime
-
 		FRotator Rotator = GetControlRotation();
 		FVector Direction = UKismetMathLibrary::GetRightVector(FRotator(0, Rotator.Yaw, 0));
 		GetPawn()->AddMovementInput(Direction, MovementVector.Y);
 	}
+
 }
 
 void AFPPlayerController::Input_Turn(const FInputActionValue& InputValue)
