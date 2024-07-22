@@ -25,7 +25,7 @@ public:
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	TObjectPtr<UStaticMeshComponent> Platform;
+	TObjectPtr<UStaticMeshComponent> Platform = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	float RotationSpeed = 1.0f;

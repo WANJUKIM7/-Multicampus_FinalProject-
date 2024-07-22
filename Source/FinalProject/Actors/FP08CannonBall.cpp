@@ -2,6 +2,8 @@
 
 
 #include "Actors/FP08CannonBall.h"
+#include "System/FPAssetManager.h"
+#include "Data/FPLevelData.h"
 
 // Sets default values
 AFP08CannonBall::AFP08CannonBall()
@@ -11,12 +13,6 @@ AFP08CannonBall::AFP08CannonBall()
 
 	CannonBall = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CannonBall"));
 	RootComponent = CannonBall;
-
-	ConstructorHelpers::FObjectFinder<UStaticMesh> FindMesh(TEXT("/Script/Engine.StaticMesh'/Engine/BasicShapes/Cylinder.Cylinder'"));
-	if (FindMesh.Succeeded())
-	{
-		CannonBall->SetStaticMesh(FindMesh.Object);
-	}
 	CannonBall->SetSimulatePhysics(true);
 	
 }
@@ -25,7 +21,25 @@ AFP08CannonBall::AFP08CannonBall()
 void AFP08CannonBall::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	// Set Mesh, Material
+	if (const UFPLevelData* LevelData = UFPAssetManager::GetAssetByName<UFPLevelData>("LevelData"))
+	{
+		if (LevelData->Level08Assets[0].CannonBall)
+		{
+			CannonBall->SetStaticMesh(LevelData->Level08Assets[0].CannonBall);
+			UE_LOG(LogTemp, Log, TEXT("CannonBall Found!"));
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("CannonBall Not Founded!"));
+		}
+
+		if (LevelData->Level08Assets[0].CannonBallMaterial)
+		{
+			CannonBall->SetMaterial(0, LevelData->Level08Assets[0].CannonBallMaterial);
+		}
+
+	}
 }
 
 // Called every frame

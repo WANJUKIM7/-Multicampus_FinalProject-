@@ -28,5 +28,5 @@ protected:
 	TObjectPtr<UStaticMeshComponent> InclinePlatform;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float InclineValue;
+	float InclineValue = 10.0f;
 };

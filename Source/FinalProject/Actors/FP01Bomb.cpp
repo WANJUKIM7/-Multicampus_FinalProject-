@@ -4,6 +4,9 @@
 #include "Actors/FP01Bomb.h"
 #include "Character/FPPlayer.h"
 #include "FP01BombParticle.h"
+#include "System/FPAssetManager.h"
+#include "Data/FPLevelData.h"
+#include "FPGameplayTags.h"
 
 // Sets default values
 AFP01Bomb::AFP01Bomb()
@@ -17,25 +20,36 @@ AFP01Bomb::AFP01Bomb()
 	Bomb = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Bomb"));
 	RootComponent = Bomb;
 	Bomb->SetRelativeScale3D(FVector(1.0f, 1.0f, 1.0f));
-
-	ConstructorHelpers::FObjectFinder<UStaticMesh> FindMesh(TEXT("/Script/Engine.StaticMesh'/Game/contents/TnT/TNT_FBX.TNT_FBX'"));
-	if (FindMesh.Succeeded())
-	{
-		Bomb->SetStaticMesh(FindMesh.Object);
-	}
 	Bomb->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	Bomb->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
-	ConstructorHelpers::FObjectFinder<UMaterial> FindMaterial(TEXT("/Script/Engine.Material'/Game/contents/TnT/Diffuse_map_Mat.Diffuse_map_Mat'"));
-    if (FindMaterial.Succeeded())
-    {
-        Bomb->SetMaterial(0, FindMaterial.Object);
-    }
 }
 
 // Called when the game starts or when spawned
 void AFP01Bomb::BeginPlay()
 {
 	Super::BeginPlay();
+
+	// Set Mesh, Material
+	if (const UFPLevelData* LevelData = UFPAssetManager::GetAssetByName<UFPLevelData>("LevelData"))
+	{
+		if (LevelData->Level01Assets[0].Bomb)
+		{
+			Bomb->SetStaticMesh(LevelData->Level01Assets[0].Bomb);
+			UE_LOG(LogTemp, Log, TEXT("Bomb Found!"));
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Bomb Not Founded!"));
+		}
+
+		if (LevelData->Level01Assets[0].BombMaterial)
+		{
+			Bomb->SetMaterial(0, LevelData->Level01Assets[0].BombMaterial);
+		}
+
+	}
+	
+    
 	Bomb->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnBeginOverlap);
 }
 

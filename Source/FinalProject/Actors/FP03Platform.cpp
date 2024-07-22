@@ -6,6 +6,8 @@
 #include "Components/TimelineComponent.h"
 #include "TimerManager.h"
 #include "Curves/CurveFloat.h"
+#include "System/FPAssetManager.h"
+#include "Data/FPLevelData.h"
 
 // Sets default values
 AFP03Platform::AFP03Platform()
@@ -16,12 +18,6 @@ AFP03Platform::AFP03Platform()
 	Platform = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Platform"));
 	RootComponent = Platform;
 	Platform->SetRelativeScale3D(FVector(1.0f, 1.0f, 0.1f));
-
-	ConstructorHelpers::FObjectFinder<UStaticMesh> FindMesh(TEXT("/Script/Engine.StaticMesh'/Game/LevelDesign/LevelPrototyping/Meshes/SM_ChamferCube.SM_ChamferCube'"));
-	if (FindMesh.Succeeded())
-	{
-		Platform->SetStaticMesh(FindMesh.Object);
-	}
 	Platform->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	Platform->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 
@@ -54,6 +50,26 @@ void AFP03Platform::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// Set Mesh, Material
+	if (const UFPLevelData* LevelData = UFPAssetManager::GetAssetByName<UFPLevelData>("LevelData"))
+	{
+		if (LevelData->Level03Assets[0].Platform)
+		{
+			Platform->SetStaticMesh(LevelData->Level03Assets[0].Platform);
+			UE_LOG(LogTemp, Log, TEXT("Platform Found!"));
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Platform Not Founded!"));
+		}
+
+		if (LevelData->Level03Assets[0].PlatformMaterial)
+		{
+			Platform->SetMaterial(0, LevelData->Level01Assets[0].BombMaterial);
+		}
+
+	}
+
 	// Shake
 	OriginalLocation = Platform->GetComponentLocation();
 

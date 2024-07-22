@@ -2,6 +2,8 @@
 
 
 #include "Actors/FP05Ball.h"
+#include "System/FPAssetManager.h"
+#include "Data/FPLevelData.h"
 
 // Sets default values
 AFP05Ball::AFP05Ball()
@@ -11,12 +13,6 @@ AFP05Ball::AFP05Ball()
 
 	Ball = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Ball"));
 	RootComponent = Ball;
-
-	ConstructorHelpers::FObjectFinder<UStaticMesh> FindMesh(TEXT("/Script/Engine.StaticMesh'/Game/Content/StarterContent/Props/MaterialSphere.MaterialSphere'"));
-	if (FindMesh.Succeeded())
-	{
-		Ball->SetStaticMesh(FindMesh.Object);
-	}
 	Ball->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 	Ball->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 }
@@ -25,7 +21,25 @@ AFP05Ball::AFP05Ball()
 void AFP05Ball::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	// Set Mesh, Material
+	if (const UFPLevelData* LevelData = UFPAssetManager::GetAssetByName<UFPLevelData>("LevelData"))
+	{
+		if (LevelData->Level05Assets[0].Ball)
+		{
+			Ball->SetStaticMesh(LevelData->Level05Assets[0].Ball);
+			UE_LOG(LogTemp, Log, TEXT("Ball Found!"));
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Ball Not Founded!"));
+		}
+
+		if (LevelData->Level05Assets[0].BallMaterial)
+		{
+			Ball->SetMaterial(0, LevelData->Level05Assets[0].BallMaterial);
+		}
+
+	}
 }
 
 // Called every frame

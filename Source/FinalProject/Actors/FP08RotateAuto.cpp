@@ -2,6 +2,8 @@
 
 
 #include "Actors/FP08RotateAuto.h"
+#include "System/FPAssetManager.h"
+#include "Data/FPLevelData.h"
 
 // Sets default values
 AFP08RotateAuto::AFP08RotateAuto()
@@ -12,12 +14,6 @@ AFP08RotateAuto::AFP08RotateAuto()
 	Platform = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Platform"));
 	RootComponent = Platform;
 	Platform->SetRelativeScale3D(FVector(5.0f, 5.0f, 1.0f));
-
-	ConstructorHelpers::FObjectFinder<UStaticMesh> FindMesh(TEXT(""));
-	if (FindMesh.Succeeded())
-	{
-		Platform->SetStaticMesh(FindMesh.Object);
-	}
 }
 
 // Called when the game starts or when spawned
@@ -25,6 +21,25 @@ void AFP08RotateAuto::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// Set Mesh, Material
+	if (const UFPLevelData* LevelData = UFPAssetManager::GetAssetByName<UFPLevelData>("LevelData"))
+	{
+		if (LevelData->Level08Assets[0].RotatingPlatform)
+		{
+			Platform->SetStaticMesh(LevelData->Level08Assets[0].RotatingPlatform);
+			UE_LOG(LogTemp, Log, TEXT("RotatingPlatform Found!"));
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("RotatingPlatform Not Founded!"));
+		}
+
+		if (LevelData->Level08Assets[0].RotatingPlatformMaterial)
+		{
+			Platform->SetMaterial(0, LevelData->Level08Assets[0].RotatingPlatformMaterial);
+		}
+
+	}
 }
 
 // Called every frame
