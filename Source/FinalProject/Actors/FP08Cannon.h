@@ -23,4 +23,25 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	TObjectPtr<UStaticMeshComponent> Cannon = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+    TObjectPtr<class UArrowComponent> ArrowMiddle = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+    TObjectPtr<class UArrowComponent> ArrowLeft = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+    TObjectPtr<class UArrowComponent> ArrowRight = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool bRandomWay = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float TimeLoopSpawnCannonBall = 3.0f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float RandomWayValue = 1000.0f;
 };

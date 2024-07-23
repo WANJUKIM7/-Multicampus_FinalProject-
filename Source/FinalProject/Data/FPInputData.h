@@ -22,6 +22,7 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UInputAction> InputAction = nullptr;
 };
+
 /**
  * 
  */
@@ -29,7 +30,7 @@ UCLASS()
 class FINALPROJECT_API UFPInputData : public UDataAsset
 {
 	GENERATED_BODY()
-
+	
 public:
 	const UInputAction* FindInputActionByTag(const FGameplayTag& InputTag) const;
 
@@ -38,21 +39,20 @@ public:
 	TObjectPtr<UInputMappingContext> IMC_Quater;
 	
 	UPROPERTY(EditDefaultsOnly)
-		TObjectPtr<UInputMappingContext> IMC_QuaterJump;
+	TObjectPtr<UInputMappingContext> IMC_QuaterJump;
 
 	UPROPERTY(EditDefaultsOnly)
-		TObjectPtr<UInputMappingContext> IMC_QuaterJumpInteraction;
+	TObjectPtr<UInputMappingContext> IMC_QuaterJumpInteraction;
 
 	UPROPERTY(EditDefaultsOnly)
-		TObjectPtr<UInputMappingContext> IMC_ThirdPerson;
+	TObjectPtr<UInputMappingContext> IMC_ThirdPerson;
 
 	UPROPERTY(EditDefaultsOnly)
-		TObjectPtr<UInputMappingContext> IMC_ThirdPersonJumpInteraction;
+	TObjectPtr<UInputMappingContext> IMC_ThirdPersonJumpInteraction;
 
 	UPROPERTY(EditDefaultsOnly)
-		TObjectPtr<UInputMappingContext> IMC_ThirdPersonDoubleJumpInteraction;
+	TObjectPtr<UInputMappingContext> IMC_ThirdPersonDoubleJumpInteraction;
 
 	UPROPERTY(EditDefaultsOnly)
 	TArray<FPInputAction> InputActions;
-	//TArray<TObjectPtr<UInputAction>> InputActions;
 };

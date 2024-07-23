@@ -41,7 +41,7 @@ public:
 	TObjectPtr<class USphereComponent> SphereCollision;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	TObjectPtr<class AFPPlayer> Player;
+	TObjectPtr<class AFPPlayer> Player = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	FVector StartLocation;
@@ -53,6 +53,6 @@ public:
 	int RandomInteger;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float PerDamage;
+	float PerDamage = 5.0f;
 };
 

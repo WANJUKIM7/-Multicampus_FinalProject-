@@ -27,23 +27,23 @@ protected:
 	virtual void SetMappingContext() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	FVector RockSpawnLocationStart;
+	FVector RockSpawnLocationStart = FVector(1680.0f, 750.0f, 980.0f);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	FVector RockSpawnLocationEnd;
+	FVector RockSpawnLocationEnd = FVector(1680.0f, 1910.0f, 980.0f);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float TimeFirstPhaseSpawn;
+	float TimeFirstPhaseSpawn = 0.5f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float TimeSecondPhaseSpawn;
+	float TimeSecondPhaseSpawn = 0.2f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float TimeThirdPhaseSpawn;
+	float TimeThirdPhaseSpawn = 0.1f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float TimeChangeSpawnLoop1;
+	float TimeChangeSpawnLoop1 = 10.0f;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float TimeChangeSpawnLoop2;
+	float TimeChangeSpawnLoop2 = 20.0f;
 };

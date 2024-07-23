@@ -34,11 +34,15 @@ public:
 
 	void SetGravityScale(float Value);
 	void SetViewReduction();
+	void SetViewDefault();
+	void SetSpotLight();
+	void SetMovementVelocity(float Value);
 	void SpawnPlayerHPUI();
 	void UpdateHPUI(float NewHP);
+	void SetCurrentLevel(ECurrentLevel level) { E_CurrentLevel = level; }
 
 	float GetHP() { return HP; }
-	void SetHP(float NewHP) { /*if (SpotLightCounts == 0) return;*/ HP = NewHP; }
+	void SetHP(float NewHP);
 
 	bool GetIsInteracting() { return bIsInteracting; }
 	void SetIsInteracting(bool IsInteracting) {  bIsInteracting = IsInteracting; }
@@ -50,7 +54,6 @@ public:
 	void SetSpotLightCounts(int NewSpotLightCounts) { SpotLightCounts = NewSpotLightCounts; }
 
 protected:
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<class USpringArmComponent> CameraBoom;
 
@@ -73,8 +76,11 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	ECurrentLevel E_CurrentLevel;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<class AFP07PointLight> PointLight;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	TObjectPtr<class USpotLightComponent> SpotLight;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int SpotLightCounts = 0;

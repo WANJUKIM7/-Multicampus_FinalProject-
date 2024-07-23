@@ -3,12 +3,11 @@
 
 #include "Actors/FP04Rock.h"
 #include "Components/SphereComponent.h"
+#include "System/FPAssetManager.h"
+#include "Data/FPLevelData.h"
 
 // Sets default values
 AFP04Rock::AFP04Rock()
-	: SizeSmall(FVector(0.3f, 0.3f, 0.3f))
-	, SizeMiddle(FVector(0.5f, 0.5f, 0.5f))
-	, SizeLarge(FVector(1.0f, 1.0f, 1.0f))
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -16,12 +15,6 @@ AFP04Rock::AFP04Rock()
 	Rock = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Rock"));
 	RootComponent = Rock;
 	Rock->SetSimulatePhysics(true);
-
-	ConstructorHelpers::FObjectFinder<UStaticMesh> FindMesh(TEXT("/Script/Engine.StaticMesh'/Game/Content/StarterContent/Props/MaterialSphere.MaterialSphere'"));
-	if (FindMesh.Succeeded())
-	{
-		Rock->SetStaticMesh(FindMesh.Object);
-	}
 	Rock->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 	//Rock->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 
@@ -37,6 +30,26 @@ void AFP04Rock::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// Set Mesh, Material
+	if (const UFPLevelData* LevelData = UFPAssetManager::GetAssetByName<UFPLevelData>("LevelData"))
+	{
+		if (LevelData->Level04Assets[0].Rock)
+		{
+			Rock->SetStaticMesh(LevelData->Level04Assets[0].Rock);
+			UE_LOG(LogTemp, Log, TEXT("Rock Found!"));
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Rock Not Founded!"));
+		}
+
+		if (LevelData->Level04Assets[0].RockMaterial)
+		{
+			Rock->SetMaterial(0, LevelData->Level04Assets[0].RockMaterial);
+		}
+
+	}
+
 	SetLifeSpan(10.0f);
 
 	int32 RandomInteger = FMath::RandRange(0, 2);

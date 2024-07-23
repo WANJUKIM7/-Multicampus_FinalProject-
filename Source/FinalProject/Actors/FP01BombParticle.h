@@ -25,5 +25,5 @@ public:
 
 private:
 	UPROPERTY(VisibleAnywhere)
-    TObjectPtr<class UParticleSystemComponent> ParticleSystem;
+    TObjectPtr<class UParticleSystemComponent> Explode;
 };

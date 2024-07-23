@@ -59,13 +59,13 @@ public:
 	TObjectPtr<class UMaterialInterface> DynamicObject;*/
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	bool IsTimePassed;
+	bool IsTimePassed = false;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	int Durability;
+	int Durability = 2;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float TimeAfterDuration;
+	float TimeAfterDuration = 3.0f;
 
 	// Shake
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
@@ -75,11 +75,11 @@ public:
     FTimerHandle ShakingTimerHandle;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-    bool IsShaking;
+    bool IsShaking = false;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-    float ShakingDuration;
+    float ShakingDuration = 1.0f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-    float ElapsedShakingTime;
+    float ElapsedShakingTime = 0.0f;
 };

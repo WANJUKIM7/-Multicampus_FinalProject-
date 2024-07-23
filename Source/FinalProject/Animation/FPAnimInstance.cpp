@@ -27,13 +27,12 @@ void UFPAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 	if (Character == nullptr)
 		return;
-
 	if (MovementComponent == nullptr)
 		return;
 
 	Velocity = MovementComponent->Velocity;
 	GroundSpeed = Velocity.Size2D();
-
+	
 	bShouldMove = (GroundSpeed > 3.0f && MovementComponent->GetCurrentAcceleration() != FVector::ZeroVector);
 	bIsFalling = MovementComponent->IsFalling();
 

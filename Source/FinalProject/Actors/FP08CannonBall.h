@@ -23,4 +23,16 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	TObjectPtr<UStaticMeshComponent> CannonBall = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float CannonBallScale = 1.0f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float ForwardForceValue = 50.0f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	FVector ForwardVector = FVector(0.0f, 0.0f, 0.0f);
 };

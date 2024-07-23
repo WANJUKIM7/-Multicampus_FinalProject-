@@ -3,6 +3,8 @@
 
 #include "Actors/FP01BombParticle.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "System/FPAssetManager.h"
+#include "Data/FPLevelData.h"
 
 // Sets default values
 AFP01BombParticle::AFP01BombParticle()
@@ -11,20 +13,31 @@ AFP01BombParticle::AFP01BombParticle()
 	PrimaryActorTick.bCanEverTick = true;
 
 	// Particle
-	ParticleSystem = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("ParticleSystem"));
-    ParticleSystem->SetupAttachment(RootComponent);
-	ConstructorHelpers::FObjectFinder<UParticleSystem> FindParticle(TEXT("/Script/Engine.ParticleSystem'/Game/contents/VFX/Realistic_Starter_VFX_Pack_Vol2/Particles/Explosion/P_Explosion_Big_A.P_Explosion_Big_A'"));
-	if (FindParticle.Succeeded())
-	{
-		ParticleSystem->SetTemplate(FindParticle.Object);
-	}
-    ParticleSystem->bAutoActivate = true;
+	Explode = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Explode"));
+    RootComponent = Explode;
+    Explode->bAutoActivate = true;
 }
 
 // Called when the game starts or when spawned
 void AFP01BombParticle::BeginPlay()
 {
 	Super::BeginPlay();
+
+	// Set ParticleSystem
+	if (const UFPLevelData* LevelData = UFPAssetManager::GetAssetByName<UFPLevelData>("LevelData"))
+	{
+		if (LevelData->Level01Assets[0].BombExplode)
+		{
+			Explode->SetTemplate(LevelData->Level01Assets[0].BombExplode);
+			UE_LOG(LogTemp, Log, TEXT("Bomb Explode Found!"));
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Bomb Explode Not Founded!"));
+		}
+
+	}
+
 	SetLifeSpan(4.0f);
 }
 

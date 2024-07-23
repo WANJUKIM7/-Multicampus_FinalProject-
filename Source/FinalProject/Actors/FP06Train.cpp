@@ -4,6 +4,8 @@
 #include "FP06Train.h"
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "System/FPAssetManager.h"
+#include "Data/FPLevelData.h"
 
 // Sets default values
 AFP06Train::AFP06Train()
@@ -15,12 +17,6 @@ AFP06Train::AFP06Train()
 	RootComponent = Train;
 	Train->SetRelativeRotation(FRotator(0.0f, 180.0f, 0.0f));
 	Train->SetRelativeScale3D(FVector(1.0f, 1.0f, 1.0f));
-
-	ConstructorHelpers::FObjectFinder<UStaticMesh> FindMesh(TEXT("/Script/Engine.StaticMesh'/Game/contents/Snake_Game/Train.Train'"));
-	if (FindMesh.Succeeded())
-	{
-		Train->SetStaticMesh(FindMesh.Object);
-	}
 	Train->SetCollisionProfileName(FName("OverlapOnlyPawn"));
 }
 
@@ -29,7 +25,36 @@ void AFP06Train::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// Set Mesh, Material
+	if (const UFPLevelData* LevelData = UFPAssetManager::GetAssetByName<UFPLevelData>("LevelData"))
+	{
+		if (LevelData->Level06Assets[0].Train)
+		{
+			Train->SetStaticMesh(LevelData->Level06Assets[0].Train);
+			UE_LOG(LogTemp, Log, TEXT("Train Found!"));
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Train Not Founded!"));
+		}
 
+		if (LevelData->Level06Assets[0].TrainMaterial0)
+		{
+			Train->SetMaterial(0, LevelData->Level06Assets[0].TrainMaterial0);
+		}
+		if (LevelData->Level06Assets[0].TrainMaterial1)
+		{
+			Train->SetMaterial(0, LevelData->Level06Assets[0].TrainMaterial1);
+		}
+		if (LevelData->Level06Assets[0].TrainMaterial2)
+		{
+			Train->SetMaterial(0, LevelData->Level06Assets[0].TrainMaterial2);
+		}
+		if (LevelData->Level06Assets[0].TrainMaterial3)
+		{
+			Train->SetMaterial(0, LevelData->Level06Assets[0].TrainMaterial3);
+		}
+	}
 }
 
 // Called every frame

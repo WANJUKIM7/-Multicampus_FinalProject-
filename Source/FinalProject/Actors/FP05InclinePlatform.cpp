@@ -2,10 +2,11 @@
 
 
 #include "Actors/FP05InclinePlatform.h"
+#include "System/FPAssetManager.h"
+#include "Data/FPLevelData.h"
 
 // Sets default values
 AFP05InclinePlatform::AFP05InclinePlatform()
-	: InclineValue(10.0f)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -13,12 +14,6 @@ AFP05InclinePlatform::AFP05InclinePlatform()
 	InclinePlatform = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("InclinePlatform"));
 	RootComponent = InclinePlatform;
 	InclinePlatform->SetRelativeScale3D(FVector(18.0f, 18.0f, 1.0f));
-
-	ConstructorHelpers::FObjectFinder<UStaticMesh> FindMesh(TEXT("/Script/Engine.StaticMesh'/Game/LevelDesign/LevelPrototyping/Meshes/SM_Cylinder.SM_Cylinder'"));
-	if (FindMesh.Succeeded())
-	{
-		InclinePlatform->SetStaticMesh(FindMesh.Object);
-	}
 	InclinePlatform->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 	InclinePlatform->SetCollisionProfileName(FName("PhysicsActor"));
 	InclinePlatform->SetSimulatePhysics(true);
@@ -28,7 +23,25 @@ AFP05InclinePlatform::AFP05InclinePlatform()
 void AFP05InclinePlatform::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	// Set Mesh, Material
+	if (const UFPLevelData* LevelData = UFPAssetManager::GetAssetByName<UFPLevelData>("LevelData"))
+	{
+		if (LevelData->Level05Assets[0].InclinePlatform)
+		{
+			InclinePlatform->SetStaticMesh(LevelData->Level05Assets[0].InclinePlatform);
+			UE_LOG(LogTemp, Log, TEXT("InclinePlatform Found!"));
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("InclinePlatform Not Founded!"));
+		}
+
+		if (LevelData->Level05Assets[0].InclinePlatformMaterial)
+		{
+			InclinePlatform->SetMaterial(0, LevelData->Level05Assets[0].InclinePlatformMaterial);
+		}
+
+	}
 }
 
 // Called every frame
