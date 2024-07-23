@@ -34,9 +34,21 @@ protected:
 	TObjectPtr<UStaticMeshComponent> Bomb;
 
 public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<class UPointLightComponent> PointLight = nullptr;
+
+	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<class USpotLightComponent> SpotLight = nullptr;*/
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	bool IsInteracting;
+	bool IsInteracting = false;
 		
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float TimeExplode;
+	float TimeExplode = 10.0f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float TimeAccumulator = 0.0f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+    bool bIsLightOn = true;
 };

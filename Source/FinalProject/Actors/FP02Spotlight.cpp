@@ -8,8 +8,6 @@
 
 // Sets default values
 AFP02Spotlight::AFP02Spotlight()
-	: Player(nullptr)
-	, PerDamage(5.0f)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -19,6 +17,7 @@ AFP02Spotlight::AFP02Spotlight()
 	SpotLight = CreateDefaultSubobject<USpotLightComponent>(TEXT("SpotLight"));
 	SpotLight->SetupAttachment(RootComponent);
 	SpotLight->SetRelativeRotation(FRotator(-90.0f, 0.0f, 0.0f));
+	SpotLight->SetRelativeLocation(FVector(0.0f, 0.0f, 600.0f));
 	SpotLight->SetIntensity(100000.0f);
 	SpotLight->SetOuterConeAngle(22.0f);
 

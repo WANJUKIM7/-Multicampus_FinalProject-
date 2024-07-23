@@ -15,6 +15,8 @@ void AFPLevelDerived03::BeginPlay()
 	SetMappingContext();
 	Super::BeginPlay();
 
+	Player->SetCurrentLevel(ECurrentLevel::E_Level03);
+
 	/*FTimerHandle BreakPlatformsHandle;
 
     GetWorldTimerManager().SetTimer(

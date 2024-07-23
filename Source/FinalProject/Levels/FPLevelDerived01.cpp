@@ -17,6 +17,8 @@ void AFPLevelDerived01::BeginPlay()
 	SetMappingContext();
 	Super::BeginPlay();
 
+	Player->SetCurrentLevel(ECurrentLevel::E_Level01);
+
 	FTimerHandle SpawnBomb;
 
     GetWorldTimerManager().SetTimer(
@@ -43,7 +45,7 @@ void AFPLevelDerived01::SpawnBomb()
 	{
 		Bomb->AttachToComponent(Player.Get()->GetMesh(),FAttachmentTransformRules::KeepRelativeTransform, FName("bomb"));
 		Player->SetIsAttachedBomb(true);
-		//Player->SetViewReduction();
+		Player->SetViewReduction();
 	}
 	else
 	{

@@ -36,11 +36,11 @@ protected:
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	FVector SizeSmall = FVector(0.3f, 0.3f, 0.3f);
+	FVector SizeSmall = FVector(0.05f, 0.05f, 0.05f);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	FVector SizeMiddle = FVector(0.5f, 0.5f, 0.5f);
+	FVector SizeMiddle = FVector(0.07f, 0.07f, 0.07f);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	FVector SizeLarge = FVector(1.0f, 1.0f, 1.0f);
+	FVector SizeLarge = FVector(0.1f, 0.1f, 0.1f);
 };

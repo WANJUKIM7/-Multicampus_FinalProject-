@@ -13,6 +13,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Engine/DirectionalLight.h"
 #include "Actors/FP07PointLight.h"
+#include "Components/SpotLightComponent.h"
 
 AFPPlayer::AFPPlayer()
 {
@@ -70,6 +71,15 @@ AFPPlayer::AFPPlayer()
 		UE_LOG(LogTemp, Log, TEXT("PlayerHPWidgetClass.Succeeded"));
         PlayerHPWidgetClassReference = PlayerHPWidgetClass.Class;
 	}
+
+	// Lv01 SpotLight
+	SpotLight = CreateDefaultSubobject<USpotLightComponent>(TEXT("SpotLight"));
+	SpotLight->SetupAttachment(GetRootComponent());
+	SpotLight->SetRelativeRotation(FRotator(-90.0f, 0.0f, 0.0f));
+	SpotLight->SetRelativeLocation(FVector(0.0f, 0.0f, 320.0f));
+	SpotLight->SetIntensity(100000.0f);
+	SpotLight->SetOuterConeAngle(22.0f);
+	SpotLight->SetVisibility(false);
 }
 
 void AFPPlayer::BeginPlay()
@@ -115,9 +125,48 @@ void AFPPlayer::SetViewReduction()
 		}
     }
 
-	PointLight = GetWorld()->SpawnActor<AFP07PointLight>(GetCapsuleComponent()->GetComponentLocation(), GetCapsuleComponent()->GetComponentRotation());
-	//PointLight->SetActorLocation(GetMesh()->GetComponentLocation());
-	PointLight->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale);
+	SetSpotLight();
+	//PointLight = GetWorld()->SpawnActor<AFP07PointLight>(GetCapsuleComponent()->GetComponentLocation(), GetCapsuleComponent()->GetComponentRotation());
+	////PointLight->SetActorLocation(GetMesh()->GetComponentLocation());
+	//PointLight->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale);
+}
+
+void AFPPlayer::SetViewDefault()
+{
+	TArray<AActor*> FoundActors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ADirectionalLight::StaticClass(), FoundActors);
+	for (AActor* Actor : FoundActors)
+    {
+        ADirectionalLight* DirLight = Cast<ADirectionalLight>(Actor);
+        if (DirLight)
+        {
+			DirLight->SetBrightness(3.0f);			
+        }
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("No Directional Light"));
+		}
+    }
+
+	if (PointLight)
+	{
+		PointLight->Destroy();
+	}
+	if (SpotLight)
+	{
+		SpotLight->SetVisibility(false);
+	}
+}
+
+void AFPPlayer::SetSpotLight()
+{
+	SpotLight->SetVisibility(true);
+	UE_LOG(LogTemp, Log, TEXT("SetSpotLight"));
+}
+
+void AFPPlayer::SetMovementVelocity(float Value)
+{
+	GetCharacterMovement()->MaxWalkSpeed = 800.0f;
 }
 
 void AFPPlayer::SpawnPlayerHPUI()
@@ -141,13 +190,35 @@ void AFPPlayer::UpdateHPUI(float NewHP)
 	PlayerHPUI->UpdateHP(NewHP);
 }
 
+void AFPPlayer::SetHP(float NewHP)
+{
+	HP = NewHP;
+	if (HP <= 0.0f)
+	{
+		APlayerController* PlayerController = Cast<APlayerController>(GetController());
+        if (PlayerController)
+        {
+            PlayerController->DisableInput(PlayerController);
+        }
+
+        FVector LaunchVelocity = FVector(1000.0f, 1000.0f, 600.0f);
+        LaunchCharacter(LaunchVelocity, true, true);
+		GetCharacterMovement()->AirControl = 0.0f;
+        GetCharacterMovement()->BrakingDecelerationFlying = 0.0f;
+		GetCharacterMovement()->BrakingDecelerationFalling = 0.0f;
+		SetGravityScale(0.4f);
+	}
+}
+
 void AFPPlayer::DestroyPlayer()
 {
 	if (IsValid(this))
 	{
-		APlayerController* PlayerController = Cast<APlayerController>(GetController());	
-		PlayerController->DisableInput(PlayerController);
-		Destroy();
+		if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
+		{
+			PlayerController->DisableInput(PlayerController);
+			Destroy();
+		}
 	}
 }
 

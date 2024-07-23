@@ -7,12 +7,11 @@
 #include "System/FPAssetManager.h"
 #include "Data/FPLevelData.h"
 #include "FPGameplayTags.h"
+#include "Components/SpotLightComponent.h"
+//#include "Components/PointLightComponent.h"
 
 // Sets default values
 AFP01Bomb::AFP01Bomb()
-	: Super()
-	, IsInteracting(false)
-	, TimeExplode(10.0f)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -22,6 +21,20 @@ AFP01Bomb::AFP01Bomb()
 	Bomb->SetRelativeScale3D(FVector(1.0f, 1.0f, 1.0f));
 	Bomb->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	Bomb->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
+
+	PointLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("PointLight"));
+	PointLight->SetupAttachment(Bomb);
+	PointLight->SetRelativeLocation(FVector(0.0f, 7.0f, 7.0f));
+	PointLight->SetIntensity(3000.0f);
+	PointLight->SetLightColor(FLinearColor::Red);
+	PointLight->SetAttenuationRadius(100.0f);
+
+	/*SpotLight = CreateDefaultSubobject<USpotLightComponent>(TEXT("SpotLight"));
+	SpotLight->SetupAttachment(Bomb);
+	SpotLight->SetRelativeRotation(FRotator(-90.0f, 0.0f, 0.0f));
+	SpotLight->SetRelativeLocation(FVector(0.0f, 0.0f, 600.0f));
+	SpotLight->SetIntensity(100000.0f);
+	SpotLight->SetOuterConeAngle(22.0f);*/
 }
 
 // Called when the game starts or when spawned
@@ -48,7 +61,6 @@ void AFP01Bomb::BeginPlay()
 		}
 
 	}
-	
     
 	Bomb->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnBeginOverlap);
 }
@@ -70,6 +82,24 @@ void AFP01Bomb::Tick(float DeltaTime)
 		Destroy();
 		UE_LOG(LogTemp, Log, TEXT("Bomb Exploded!"));
 	}
+
+	// PointLight
+	TimeAccumulator += DeltaTime;
+    if (TimeAccumulator >= 1.0f)
+    {
+        TimeAccumulator = 0.0f;
+
+        if (bIsLightOn)
+        {
+            PointLight->SetIntensity(0.0f);
+        }
+        else
+        {
+            PointLight->SetIntensity(3000.0f);
+        }
+
+        bIsLightOn = !bIsLightOn;
+    }
 }
 
 void AFP01Bomb::ResetTimer()
@@ -84,17 +114,28 @@ void AFP01Bomb::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor*
 
 	/*UE_LOG(LogTemp, Log, TEXT("Bomb Begin Overlap1: %s"), *GetAttachParentActor()->GetName());
 	UE_LOG(LogTemp, Log, TEXT("Bomb Begin Overlap2: %s"), *OtherActor->GetName());*/
+	if (!GetAttachParentActor())
+	{
+		return;
+	}
 
 	if (GetAttachParentActor()->GetName() == OtherActor->GetName())
+	{
 		return;
+	}
 
 	if (AFPPlayer* NewPlayer = Cast<AFPPlayer>(OtherActor))
 	{
 		if (Cast<AFPPlayer>(GetAttachParentActor())->GetIsInteracting() == false)
+		{
 			return;
+		}
+
 		Cast<AFPPlayer>(GetAttachParentActor())->SetIsAttachedBomb(false);
+		Cast<AFPPlayer>(GetAttachParentActor())->SetViewDefault();
 		AttachToComponent(NewPlayer->GetMesh(),FAttachmentTransformRules::KeepRelativeTransform, FName("bomb"));
 		NewPlayer->SetIsAttachedBomb(true);
+		NewPlayer->SetViewReduction();
 		ResetTimer();
 		UE_LOG(LogTemp, Log, TEXT("Bomb Begin Overlap!"));
 	}
