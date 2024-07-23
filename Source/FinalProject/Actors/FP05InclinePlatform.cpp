@@ -17,6 +17,11 @@ AFP05InclinePlatform::AFP05InclinePlatform()
 	InclinePlatform->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 	InclinePlatform->SetCollisionProfileName(FName("PhysicsActor"));
 	InclinePlatform->SetSimulatePhysics(true);
+	if (FBodyInstance* BodyInst = InclinePlatform->GetBodyInstance())
+	{
+		BodyInst->SetMassScale(0.6f);
+		BodyInst->UpdateMassProperties();
+	}
 }
 
 // Called when the game starts or when spawned

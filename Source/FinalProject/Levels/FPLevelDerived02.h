@@ -34,9 +34,9 @@ public:
 	void SetTimer();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector SpotLightCenterLocation;
+	FVector SpotLightCenterLocation = FVector(500.0f, 500.0f, -260.0f);
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FTimerHandle SpawnSpotLightHandle;
 
 	UPROPERTY()

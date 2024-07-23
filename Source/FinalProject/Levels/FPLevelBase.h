@@ -34,6 +34,7 @@ protected:
 	virtual void SetMappingContext();
 	virtual void SpawnCamera();
 	void SetTimer();
+	void SpawnPortal();
 	void SpawnPlayer();
 	void StartCountdown();
 	void DestroyCountdownWidget();
@@ -41,35 +42,38 @@ protected:
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	TObjectPtr<class AFPPlayer> Player;
+	TObjectPtr<class AFPPlayer> Player = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	TObjectPtr<class ACameraActor> Camera;
+	TObjectPtr<class ACameraActor> Camera = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	TObjectPtr<class AFPPlayerController> PlayerController;
+	TObjectPtr<class AFPPlayerController> PlayerController = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TObjectPtr<class UWidgetComponent> Countdown;
+	TObjectPtr<class UWidgetComponent> Countdown = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	TSubclassOf<class UUserWidget> CountdownWidgetClassReference;
+	TSubclassOf<class UUserWidget> CountdownWidgetClassReference = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	FVector PlayerSpawnLocation;
+	FVector PlayerSpawnLocation = FVector(1000.0f, 1000.0f, 500.0f);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	FVector CameraSpawnLocation;
+	FVector CameraSpawnLocation = FVector(-700.0f, 780.0f, 1000.0f);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	FRotator CameraSpawnRotation;
+	FRotator CameraSpawnRotation = FRotator(-40.0f, 0.0f, 0.0f);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float TimeSpawnPlayer;
+	float TimeSpawnPortal = 0.5f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float TimeCountDownStarts;
+	float TimeSpawnPlayer = 1.0f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float TimeGameStarts;
+	float TimeCountDownStarts = 3.0f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float TimeGameStarts = 8.0f;
 };

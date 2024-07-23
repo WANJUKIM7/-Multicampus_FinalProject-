@@ -6,18 +6,9 @@
 #include "Camera/CameraActor.h"
 #include "Components/WidgetComponent.h"
 #include "UI/FPStartCountdownWidget.h"
+#include "Actors/FPPortalEnterLevel.h"
 
 AFPLevelBase::AFPLevelBase()
-    : Player(nullptr)
-    , Camera(nullptr)
-    , PlayerController(nullptr)
-    , Countdown(nullptr)
-    , TimeSpawnPlayer(1.0f)
-    , TimeCountDownStarts(3.0f)
-    , TimeGameStarts(8.0f)
-    , PlayerSpawnLocation(FVector(1000.0f, 1000.0f, 500.0f))
-    //, CameraSpawnLocation(FVector(0.0f, 800.0f, 700.0f))
-    , CameraSpawnRotation(FRotator(-40.0f, 0.0f, 0.0f))
 {
     // Countdown Widget
     ConstructorHelpers::FClassFinder<UUserWidget> CountdownWidgetClass(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Programming/UI/WB_Countdown.WB_Countdown_C'"));
@@ -104,9 +95,13 @@ void AFPLevelBase::SpawnCamera()
 void AFPLevelBase::SetTimer()
 {
     UE_LOG(LogTemp, Log, TEXT("AFPLevelBase::SetTimer"));
+    FTimerHandle PortalHandle;
     FTimerHandle CountdownStartHandle;
     FTimerHandle GameStartHandle;
     FTimerHandle PlayerControlable;
+
+    GetWorldTimerManager().SetTimer(
+        PortalHandle, this, &AFPLevelBase::SpawnPortal, TimeSpawnPortal, false);
 
     GetWorldTimerManager().SetTimer(
         GameStartHandle, this, &AFPLevelBase::SpawnPlayer, TimeSpawnPlayer, false);
@@ -118,12 +113,17 @@ void AFPLevelBase::SetTimer()
         PlayerControlable, this, &AFPLevelBase::PlayerControlable, 1.0f, false);
 }
 
+void AFPLevelBase::SpawnPortal()
+{
+    AFPPortalEnterLevel* Particle = GetWorld()->SpawnActor<AFPPortalEnterLevel>(Player->GetActorLocation(), FRotator(0.0f, 0.0f, 0.0f));
+}
+
 void AFPLevelBase::SpawnPlayer()
 {
     UE_LOG(LogTemp, Log, TEXT("SpawnPlayer"));
     if (Player)
     {
-        Player->SetGravityScale(1.75f);
+        Player->SetMovementReset();
         Player->SetActorHiddenInGame(false);
     }
 }

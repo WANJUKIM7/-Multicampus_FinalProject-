@@ -3,6 +3,9 @@
 
 #include "Actors/FPPortalEnterLevel.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "System/FPAssetManager.h"
+#include "Data/FPLevelData.h"
+#include "NiagaraComponent.h"
 
 // Sets default values
 AFPPortalEnterLevel::AFPPortalEnterLevel()
@@ -11,21 +14,31 @@ AFPPortalEnterLevel::AFPPortalEnterLevel()
 	PrimaryActorTick.bCanEverTick = true;
 
 	// Particle
-	ParticleSystem = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("ParticleSystem"));
-    ParticleSystem->SetupAttachment(RootComponent);
-	ConstructorHelpers::FObjectFinder<UParticleSystem> FindParticle(TEXT(""));
-	if (FindParticle.Succeeded())
-	{
-		ParticleSystem->SetTemplate(FindParticle.Object);
-	}
-    ParticleSystem->bAutoActivate = true;
+	PortalEnter = CreateDefaultSubobject<UNiagaraComponent>(TEXT("PortalEnter"));
+    PortalEnter->SetupAttachment(RootComponent);
+	PortalEnter->SetRelativeScale3D(FVector(0.0f, 0.0f, 0.0f));
+    PortalEnter->bAutoActivate = true;
 }
 
 // Called when the game starts or when spawned
 void AFPPortalEnterLevel::BeginPlay()
 {
 	Super::BeginPlay();
-	SetLifeSpan(4.0f);
+
+	// Set ParticleSystem
+	if (const UFPLevelData* LevelData = UFPAssetManager::GetAssetByName<UFPLevelData>("LevelData"))
+	{
+		if (LevelData->LevelBaseAssets[0].PortalEnter)
+		{
+			PortalEnter->SetAsset(LevelData->LevelBaseAssets[0].PortalEnter);
+			UE_LOG(LogTemp, Log, TEXT("PortalEnter Found!"));
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("PortalEnter Not Founded!"));
+		}
+
+	}
 }
 
 // Called every frame
@@ -33,5 +46,33 @@ void AFPPortalEnterLevel::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-}
+	ElapsedTime += DeltaTime;
 
+	if (bIsScalingUp)
+	{
+		float Scale = FMath::Clamp(ElapsedTime, 0.0f, 1.0f);
+		PortalEnter->SetWorldScale3D(FVector(Scale));
+
+		if (ElapsedTime >= 1.0f)
+		{
+			bIsScalingUp = false;
+			ElapsedTime = 0.0f;
+		}
+	}
+	else if (!bIsScalingDown && ElapsedTime >= 1.0f)
+	{
+		ElapsedTime = 0.0f;
+		bIsScalingDown = true;
+	}
+	else if (bIsScalingDown)
+	{
+		float Scale = FMath::Clamp(1.0f - ElapsedTime, 0.0f, 1.0f);
+		PortalEnter->SetWorldScale3D(FVector(Scale));
+
+		if (ElapsedTime >= 1.0f)
+		{
+			bIsScalingDown = false;
+			Destroy();
+		}
+	}
+}

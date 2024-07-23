@@ -47,9 +47,13 @@ AFPPlayer::AFPPlayer()
 	GetCharacterMovement()->AirControl = 0.35f;
 	GetCharacterMovement()->MaxWalkSpeed = 500.f;
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
+    GetCharacterMovement()->BrakingDecelerationFlying = 0.0f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
-
+	GetCharacterMovement()->MaxAcceleration = 2048.0f;
+	GetCharacterMovement()->GroundFriction = 8.0f;
+	GetCharacterMovement()->GravityScale = 1.75f;
+		
 	// Nickname Widget
 	NicknameUI = CreateDefaultSubobject<UWidgetComponent>(TEXT("Nickname"));
 	NicknameUI->SetupAttachment(GetRootComponent());
@@ -96,6 +100,9 @@ void AFPPlayer::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("UI Failed"));
 	}
+
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnBeginOverlap);
+	GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &ThisClass::OnHit);
 }
 
 void AFPPlayer::Tick(float DeltaTime)
@@ -164,9 +171,33 @@ void AFPPlayer::SetSpotLight()
 	UE_LOG(LogTemp, Log, TEXT("SetSpotLight"));
 }
 
+void AFPPlayer::SetMovementReset()
+{
+	GetCharacterMovement()->JumpZVelocity = 700.f;
+	GetCharacterMovement()->AirControl = 0.35f;
+	GetCharacterMovement()->MaxWalkSpeed = 500.f;
+	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
+    GetCharacterMovement()->BrakingDecelerationFlying = 0.0f;
+	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
+	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
+	GetCharacterMovement()->MaxAcceleration = 2048.0f;
+	GetCharacterMovement()->GroundFriction = 8.0f;
+	GetCharacterMovement()->GravityScale = 1.75f;
+}
+
 void AFPPlayer::SetMovementVelocity(float Value)
 {
 	GetCharacterMovement()->MaxWalkSpeed = 800.0f;
+}
+
+void AFPPlayer::SetMovementAccerlation(float Value)
+{
+	GetCharacterMovement()->MaxAcceleration = Value;
+}
+
+void AFPPlayer::SetMovementGroundFriction(float Value)
+{
+	GetCharacterMovement()->GroundFriction = Value;
 }
 
 void AFPPlayer::SpawnPlayerHPUI()
@@ -207,6 +238,30 @@ void AFPPlayer::SetHP(float NewHP)
         GetCharacterMovement()->BrakingDecelerationFlying = 0.0f;
 		GetCharacterMovement()->BrakingDecelerationFalling = 0.0f;
 		SetGravityScale(0.4f);
+	}
+}
+
+void AFPPlayer::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+
+}
+
+void AFPPlayer::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+{
+	if (E_CurrentLevel == ECurrentLevel::E_Level05)
+	{
+		Bounce_05--;
+		switch (Bounce_05)
+		{
+		case 0 :
+			LaunchCharacter(FVector(0.0f, 0.0f, 400.0f), false, true);
+			break;
+		case 1:
+			LaunchCharacter(FVector(0.0f, 0.0f, 600.0f), false, true);
+			break;
+		default:
+			break;
+		}
 	}
 }
 

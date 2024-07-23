@@ -23,7 +23,16 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-private:
+protected:
 	UPROPERTY(VisibleAnywhere)
-    TObjectPtr<class UParticleSystemComponent> ParticleSystem;
+    TObjectPtr<class UNiagaraComponent> PortalEnter;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float ElapsedTime = 0.0f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool bIsScalingUp = true;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool bIsScalingDown = false;
 };

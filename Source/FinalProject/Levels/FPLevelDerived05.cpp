@@ -13,6 +13,10 @@ void AFPLevelDerived05::BeginPlay()
 {
 	SetMappingContext();
 	Super::BeginPlay();
+
+	Player->SetCurrentLevel(ECurrentLevel::E_Level05);
+	Player->SetMovementAccerlation(500.0f);
+	Player->SetMovementGroundFriction(0.2f);
 }
 
 void AFPLevelDerived05::Tick(float DeltaTime)

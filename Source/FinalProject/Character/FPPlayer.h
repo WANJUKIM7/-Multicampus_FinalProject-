@@ -9,10 +9,15 @@
 UENUM(BlueprintType)
 enum class ECurrentLevel : uint8
 {
+	E_LevelBase UMETA(DisplayName = "LevelBase"),
 	E_Level01 UMETA(DisplayName = "Level01"),
 	E_Level02 UMETA(DisplayName = "Level02"),
 	E_Level03 UMETA(DisplayName = "Level03"),
-	E_Level06 UMETA(DisplayName = "Level06")
+	E_Level04 UMETA(DisplayName = "Level04"),
+	E_Level05 UMETA(DisplayName = "Level05"),
+	E_Level06 UMETA(DisplayName = "Level06"),
+	E_Level07 UMETA(DisplayName = "Level07"),
+	E_Level08 UMETA(DisplayName = "Level08")
 };
 
 /**
@@ -36,7 +41,10 @@ public:
 	void SetViewReduction();
 	void SetViewDefault();
 	void SetSpotLight();
+	void SetMovementReset();
 	void SetMovementVelocity(float Value);
+	void SetMovementAccerlation(float Value);
+	void SetMovementGroundFriction(float Value);
 	void SpawnPlayerHPUI();
 	void UpdateHPUI(float NewHP);
 	void SetCurrentLevel(ECurrentLevel level) { E_CurrentLevel = level; }
@@ -59,6 +67,13 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<class UCameraComponent> FollowCamera;
+
+private:
+	UFUNCTION()
+	void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 public:
 	UFUNCTION(BlueprintCallable)
@@ -93,4 +108,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	bool bIsAttachedBomb = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	int Bounce_05 = 2;
 };

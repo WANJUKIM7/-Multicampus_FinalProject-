@@ -18,7 +18,8 @@ public class FinalProject : ModuleRules
 			"InputCore",
 			"EnhancedInput",
 			"GameplayTags",
-			"UMG"
+			"UMG",
+			"Niagara"
 		});
 	}
 }

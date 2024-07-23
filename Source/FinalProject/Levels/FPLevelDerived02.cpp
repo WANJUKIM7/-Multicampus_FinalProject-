@@ -6,8 +6,6 @@
 #include "Actors/FP02Spotlight.h"
 
 AFPLevelDerived02::AFPLevelDerived02()
-	: Super()
-	, SpotLightCenterLocation(FVector(500.0f, 500.0f, 320.0f))
 {
 	ConstructorHelpers::FClassFinder<AFP02Spotlight> FindClass(TEXT("/Script/Engine.Blueprint'/Game/Programming/Blueprints/BP_02_SpotLight.BP_02_SpotLight_C'"));
 	if (FindClass.Succeeded())
@@ -20,6 +18,8 @@ void AFPLevelDerived02::BeginPlay()
 {
 	SetMappingContext();
 	Super::BeginPlay();
+
+	Player->SetCurrentLevel(ECurrentLevel::E_Level02);
 
 	SetTimer();
 }
@@ -56,8 +56,8 @@ void AFPLevelDerived02::DarkChange()
 
 void AFPLevelDerived02::SpawnSpotLight()
 {
-	FVector Location(-1000.0f, -1000.0f, -1000.0f);
-	FRotator Rotation(0.0f, 0.0f, 0.0f);
+	/*FVector Location(-1000.0f, -1000.0f, -1000.0f);
+	FRotator Rotation(0.0f, 0.0f, 0.0f);*/
 	//AFP02Spotlight* Light = GetWorld()->SpawnActor<AFP02Spotlight>(Location, Rotation);
 	AFP02Spotlight* Light = Cast<AFP02Spotlight>(GetWorld()->SpawnActor(ActorClass));
 	Light->SetValues(SpotLightCenterLocation);

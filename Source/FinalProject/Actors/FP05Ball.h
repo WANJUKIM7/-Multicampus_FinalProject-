@@ -26,4 +26,13 @@ public:
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<UStaticMeshComponent> Ball;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	FVector HitVector = FVector(0.0f, 0.0f, 0.0f);
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	FVector HitLocation = FVector(0.0f, 0.0f, 0.0f);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float HitPower = 10.0f;
 };

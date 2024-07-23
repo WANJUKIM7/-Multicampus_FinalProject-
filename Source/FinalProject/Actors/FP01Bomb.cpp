@@ -8,7 +8,6 @@
 #include "Data/FPLevelData.h"
 #include "FPGameplayTags.h"
 #include "Components/SpotLightComponent.h"
-//#include "Components/PointLightComponent.h"
 
 // Sets default values
 AFP01Bomb::AFP01Bomb()
@@ -28,13 +27,6 @@ AFP01Bomb::AFP01Bomb()
 	PointLight->SetIntensity(3000.0f);
 	PointLight->SetLightColor(FLinearColor::Red);
 	PointLight->SetAttenuationRadius(100.0f);
-
-	/*SpotLight = CreateDefaultSubobject<USpotLightComponent>(TEXT("SpotLight"));
-	SpotLight->SetupAttachment(Bomb);
-	SpotLight->SetRelativeRotation(FRotator(-90.0f, 0.0f, 0.0f));
-	SpotLight->SetRelativeLocation(FVector(0.0f, 0.0f, 600.0f));
-	SpotLight->SetIntensity(100000.0f);
-	SpotLight->SetOuterConeAngle(22.0f);*/
 }
 
 // Called when the game starts or when spawned

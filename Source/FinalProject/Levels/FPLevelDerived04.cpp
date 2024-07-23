@@ -13,6 +13,8 @@ void AFPLevelDerived04::BeginPlay()
 {
 	SetMappingContext();
 	Super::BeginPlay();
+
+	Player->SetCurrentLevel(ECurrentLevel::E_Level04);
 }
 
 void AFPLevelDerived04::Tick(float DeltaTime)

@@ -8,7 +8,20 @@
 #include "FPLevelData.generated.h"
 
 USTRUCT()
-struct FPLeve01Assets
+struct FPLevelBaseAssets
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditDefaultsOnly)
+	FGameplayTag InputTag = FGameplayTag::EmptyTag;
+
+	UPROPERTY(EditDefaultsOnly)
+    TObjectPtr<class UNiagaraSystem> PortalEnter;
+};
+
+USTRUCT()
+struct FPLevel01Assets
 {
 	GENERATED_BODY()
 
@@ -27,7 +40,7 @@ public:
 };
 
 USTRUCT()
-struct FPLeve02Assets
+struct FPLevel02Assets
 {
 	GENERATED_BODY()
 
@@ -40,7 +53,7 @@ public:
 };
 
 USTRUCT()
-struct FPLeve03Assets
+struct FPLevel03Assets
 {
 	GENERATED_BODY()
 
@@ -56,7 +69,7 @@ public:
 };
 
 USTRUCT()
-struct FPLeve04Assets
+struct FPLevel04Assets
 {
 	GENERATED_BODY()
 
@@ -72,7 +85,7 @@ public:
 };
 
 USTRUCT()
-struct FPLeve05Assets
+struct FPLevel05Assets
 {
 	GENERATED_BODY()
 
@@ -97,7 +110,7 @@ public:
 };
 
 USTRUCT()
-struct FPLeve06Assets
+struct FPLevel06Assets
 {
 	GENERATED_BODY()
 
@@ -122,7 +135,7 @@ public:
 };
 
 USTRUCT()
-struct FPLeve08Assets
+struct FPLevel08Assets
 {
 	GENERATED_BODY()
 
@@ -199,25 +212,28 @@ public:
 	
 public:
 	UPROPERTY(EditDefaultsOnly)
-    TArray<FPLeve01Assets> Level01Assets;
+    TArray<FPLevelBaseAssets> LevelBaseAssets;
 
 	UPROPERTY(EditDefaultsOnly)
-    TArray<FPLeve02Assets> Level02Assets;
+    TArray<FPLevel01Assets> Level01Assets;
 
 	UPROPERTY(EditDefaultsOnly)
-    TArray<FPLeve03Assets> Level03Assets;
+    TArray<FPLevel02Assets> Level02Assets;
 
 	UPROPERTY(EditDefaultsOnly)
-    TArray<FPLeve04Assets> Level04Assets;
+    TArray<FPLevel03Assets> Level03Assets;
 
 	UPROPERTY(EditDefaultsOnly)
-    TArray<FPLeve05Assets> Level05Assets;
+    TArray<FPLevel04Assets> Level04Assets;
 
 	UPROPERTY(EditDefaultsOnly)
-    TArray<FPLeve06Assets> Level06Assets;
+    TArray<FPLevel05Assets> Level05Assets;
 
 	UPROPERTY(EditDefaultsOnly)
-    TArray<FPLeve08Assets> Level08Assets;
+    TArray<FPLevel06Assets> Level06Assets;
+
+	UPROPERTY(EditDefaultsOnly)
+    TArray<FPLevel08Assets> Level08Assets;
 
 	UPROPERTY(EditDefaultsOnly)
 	TArray<FPAssetMeshes> AssetMeshes;
