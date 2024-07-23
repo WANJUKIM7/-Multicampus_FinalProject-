@@ -25,4 +25,5 @@ public:
 
 protected:
 	virtual void SetMappingContext() override;
+	virtual void SetSpawnValues() override;
 };

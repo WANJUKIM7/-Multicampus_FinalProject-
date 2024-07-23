@@ -17,6 +17,7 @@ AFPLevelDerived02::AFPLevelDerived02()
 void AFPLevelDerived02::BeginPlay()
 {
 	SetMappingContext();
+	SetSpawnValues();
 	Super::BeginPlay();
 
 	Player->SetCurrentLevel(ECurrentLevel::E_Level02);
@@ -34,6 +35,13 @@ void AFPLevelDerived02::SetMappingContext()
 	PlayerController = Cast<AFPPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
     PlayerController->ChangeMappingContextQuater();
     PlayerController->DisableInput(PlayerController);
+}
+
+void AFPLevelDerived02::SetSpawnValues()
+{
+	LevelDatas->LevelBase.CameraSpawnLocation = LevelDatas->Level02.CameraSpawnLocation;
+	LevelDatas->LevelBase.CameraSpawnRotation = LevelDatas->Level02.CameraSpawnRotation;
+	LevelDatas->LevelBase.PlayerSpawnLocation = LevelDatas->Level02.PlayerSpawnLocation;
 }
 
 void AFPLevelDerived02::DarkChange()
@@ -60,7 +68,7 @@ void AFPLevelDerived02::SpawnSpotLight()
 	FRotator Rotation(0.0f, 0.0f, 0.0f);*/
 	//AFP02Spotlight* Light = GetWorld()->SpawnActor<AFP02Spotlight>(Location, Rotation);
 	AFP02Spotlight* Light = Cast<AFP02Spotlight>(GetWorld()->SpawnActor(ActorClass));
-	Light->SetValues(SpotLightCenterLocation);
+	Light->SetValues(LevelDatas->Level02.SpotLightCenterLocation);
 	//UE_LOG(LogTemp, Log, TEXT("SpawnSpotLight"));
 }
 
@@ -95,18 +103,18 @@ void AFPLevelDerived02::SetTimer()
 	FTimerHandle Phase3SpawnTimeSpotLightHandle;
 
     GetWorldTimerManager().SetTimer(
-        SpawnPlayerHPUIHandle, Player.Get(), &AFPPlayer::SpawnPlayerHPUI, TimeGameStarts, false);
+        SpawnPlayerHPUIHandle, Player.Get(), &AFPPlayer::SpawnPlayerHPUI, LevelDatas->LevelBase.TimeGameStarts, false);
 	
 	/*GetWorldTimerManager().SetTimer(
         DarkChangeHandle, this, &AFPLevelDerived02::DarkChange, TimeGameStarts, false);*/
 
 	GetWorldTimerManager().SetTimer(
-        SpawnSpotLightHandle, this, &AFPLevelDerived02::SpawnSpotLight, 0.5f, true, TimeGameStarts);
+        SpawnSpotLightHandle, this, &AFPLevelDerived02::SpawnSpotLight, 0.5f, true, LevelDatas->LevelBase.TimeGameStarts);
 
 	GetWorldTimerManager().SetTimer(
-        Phase2SpawnTimeSpotLightHandle, this, &AFPLevelDerived02::Phase2SpawnTimeSpotLight, TimeGameStarts + 6.0f, false);
+        Phase2SpawnTimeSpotLightHandle, this, &AFPLevelDerived02::Phase2SpawnTimeSpotLight, LevelDatas->LevelBase.TimeGameStarts + 6.0f, false);
 
 	GetWorldTimerManager().SetTimer(
-        Phase3SpawnTimeSpotLightHandle, this, &AFPLevelDerived02::Phase3SpawnTimeSpotLight, TimeGameStarts + 12.0f, false);
+        Phase3SpawnTimeSpotLightHandle, this, &AFPLevelDerived02::Phase3SpawnTimeSpotLight, LevelDatas->LevelBase.TimeGameStarts + 12.0f, false);
 
 }

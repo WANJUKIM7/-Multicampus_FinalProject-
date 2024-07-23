@@ -25,7 +25,7 @@ public:
 
 protected:
 	virtual void SetMappingContext() override;
-
+	virtual void SetSpawnValues() override;
 public:
 	void DarkChange();
 	void SpawnSpotLight();
@@ -33,8 +33,8 @@ public:
 	void Phase3SpawnTimeSpotLight();
 	void SetTimer();
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector SpotLightCenterLocation = FVector(500.0f, 500.0f, -260.0f);
+	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	FVector SpotLightCenterLocation = FVector(500.0f, 500.0f, -260.0f);*/
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FTimerHandle SpawnSpotLightHandle;

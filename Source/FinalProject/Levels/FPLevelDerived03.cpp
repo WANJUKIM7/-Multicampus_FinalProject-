@@ -6,7 +6,6 @@
 
 AFPLevelDerived03::AFPLevelDerived03()
 	: Super()
-	, TimePlatformsBreakLoop(3.0f)
 {
 }
 

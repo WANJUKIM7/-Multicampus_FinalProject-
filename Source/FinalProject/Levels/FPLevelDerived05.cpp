@@ -4,9 +4,7 @@
 #include "Levels/FPLevelDerived05.h"
 
 AFPLevelDerived05::AFPLevelDerived05()
-	: Super()
 {
-	PlayerSpawnLocation = FVector(0.0f, 0.0f, 0.0f);
 }
 
 void AFPLevelDerived05::BeginPlay()
@@ -17,6 +15,9 @@ void AFPLevelDerived05::BeginPlay()
 	Player->SetCurrentLevel(ECurrentLevel::E_Level05);
 	Player->SetMovementAccerlation(500.0f);
 	Player->SetMovementGroundFriction(0.2f);
+
+	LevelDatas->LevelBase.PlayerSpawnLocation = FVector(0.0f, 0.0f, 0.0f);
+
 }
 
 void AFPLevelDerived05::Tick(float DeltaTime)

@@ -9,12 +9,13 @@ AFPLevelDerived01::AFPLevelDerived01()
 	, Bomb(nullptr)
 	, BombClass(nullptr)
 {
-	CameraSpawnLocation = FVector(0.0f, 800.0f, 300.0f);
+	//LevelDatas->LevelBase.CameraSpawnLocation = FVector(0.0f, 800.0f, 300.0f);
 }
 
 void AFPLevelDerived01::BeginPlay()
 {
 	SetMappingContext();
+	SetSpawnValues();
 	Super::BeginPlay();
 
 	Player->SetCurrentLevel(ECurrentLevel::E_Level01);
@@ -22,7 +23,7 @@ void AFPLevelDerived01::BeginPlay()
 	FTimerHandle SpawnBomb;
 
     GetWorldTimerManager().SetTimer(
-        SpawnBomb, this, &AFPLevelDerived01::SpawnBomb, TimeGameStarts, false);
+        SpawnBomb, this, &AFPLevelDerived01::SpawnBomb, LevelDatas->LevelBase.TimeGameStarts, false);
 }
 
 void AFPLevelDerived01::Tick(float DeltaTime)
@@ -35,6 +36,13 @@ void AFPLevelDerived01::SetMappingContext()
 	PlayerController = Cast<AFPPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
     PlayerController->ChangeMappingContextQuaterJumpInteraction();
     PlayerController->DisableInput(PlayerController);
+}
+
+void AFPLevelDerived01::SetSpawnValues()
+{
+	LevelDatas->LevelBase.CameraSpawnLocation = LevelDatas->Level01.CameraSpawnLocation;
+	LevelDatas->LevelBase.CameraSpawnRotation = LevelDatas->Level01.CameraSpawnRotation;
+	LevelDatas->LevelBase.PlayerSpawnLocation = LevelDatas->Level01.PlayerSpawnLocation;
 }
 
 void AFPLevelDerived01::SpawnBomb()

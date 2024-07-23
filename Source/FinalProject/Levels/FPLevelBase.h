@@ -7,8 +7,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "Character/FPPlayerController.h"
 #include "Character/FPPlayer.h"
+#include "Data/FPLevelDatas.h"
 #include "FPLevelBase.generated.h"
-
 
 /**
  * 
@@ -33,6 +33,7 @@ protected:
 	void PlayerSetting();
 	virtual void SetMappingContext();
 	virtual void SpawnCamera();
+	virtual void SetSpawnValues();
 	void SetTimer();
 	void SpawnPortal();
 	void SpawnPlayer();
@@ -56,7 +57,10 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TSubclassOf<class UUserWidget> CountdownWidgetClassReference = nullptr;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    TObjectPtr<class UFPLevelDatas> LevelDatas;
+
+	/*UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	FVector PlayerSpawnLocation = FVector(1000.0f, 1000.0f, 500.0f);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
@@ -75,5 +79,5 @@ protected:
 	float TimeCountDownStarts = 3.0f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float TimeGameStarts = 8.0f;
+	float TimeGameStarts = 8.0f;*/
 };

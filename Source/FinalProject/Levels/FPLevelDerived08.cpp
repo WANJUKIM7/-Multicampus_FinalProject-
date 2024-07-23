@@ -4,7 +4,6 @@
 #include "Levels/FPLevelDerived08.h"
 
 AFPLevelDerived08::AFPLevelDerived08()
-    : Super()
 {
 }
 

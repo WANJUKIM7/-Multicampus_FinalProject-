@@ -33,6 +33,6 @@ public:
 	/*UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TArray<TSubclassOf<class AFP03Platform>> Platforms;*/
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float TimePlatformsBreakLoop;
+	/*UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float TimePlatformsBreakLoop = 3.0f;*/
 };

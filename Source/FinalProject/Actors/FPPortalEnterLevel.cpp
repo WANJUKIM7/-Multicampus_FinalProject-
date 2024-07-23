@@ -15,7 +15,7 @@ AFPPortalEnterLevel::AFPPortalEnterLevel()
 
 	// Particle
 	PortalEnter = CreateDefaultSubobject<UNiagaraComponent>(TEXT("PortalEnter"));
-    PortalEnter->SetupAttachment(RootComponent);
+    RootComponent = PortalEnter;
 	PortalEnter->SetRelativeScale3D(FVector(0.0f, 0.0f, 0.0f));
     PortalEnter->bAutoActivate = true;
 }

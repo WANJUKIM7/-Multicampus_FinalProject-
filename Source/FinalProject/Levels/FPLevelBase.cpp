@@ -18,12 +18,26 @@ AFPLevelBase::AFPLevelBase()
         CountdownWidgetClassReference = CountdownWidgetClass.Class;
 	}
 
-    CameraSpawnLocation = FVector(-700.0f, 780.0f, 1000.0f);
+    // Level Datas
+    static ConstructorHelpers::FObjectFinder<UFPLevelDatas> DataAsset(TEXT("/Script/FinalProject.FPLevelDatas'/Game/Programming/Data/DA_LevelDatas.DA_LevelDatas'"));
+    if (DataAsset.Succeeded())
+    {
+        LevelDatas = DataAsset.Object;
+        UE_LOG(LogTemp, Log, TEXT("DataAsset.Succeeded()"));
+        
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("DataAsset failed()"));
+    }
+
+    //LevelDatas->LevelBase.CameraSpawnLocation = FVector(-700.0f, 780.0f, 1000.0f);
 }
 
 void AFPLevelBase::BeginPlay()
 {
     //StartFadeIn();
+    SetSpawnValues();
     PlayerSetting();
     //SetMappingContext();
     SpawnCamera();
@@ -59,7 +73,7 @@ void AFPLevelBase::PlayerSetting()
     if (Player)
     {
         Player->GetController();
-        Player->SetActorLocation(PlayerSpawnLocation);
+        Player->SetActorLocation(LevelDatas->LevelBase.PlayerSpawnLocation);
         Player->SetGravityScale(0.0f);
         Player->SetActorHiddenInGame(true);
         UE_LOG(LogTemp, Log, TEXT("Player obtained from GameMode: %s"), *Player->GetName());
@@ -79,7 +93,7 @@ void AFPLevelBase::SetMappingContext()
 
 void AFPLevelBase::SpawnCamera()
 {
-    FTransform Transform(CameraSpawnRotation, CameraSpawnLocation, FVector{ 1.0f, 1.0f, 1.0f });
+    FTransform Transform(LevelDatas->LevelBase.CameraSpawnRotation, LevelDatas->LevelBase.CameraSpawnLocation, FVector{ 1.0f, 1.0f, 1.0f });
     
     if (Camera = GetWorld()->SpawnActor<ACameraActor>())
     {
@@ -92,6 +106,10 @@ void AFPLevelBase::SpawnCamera()
     }
 }
 
+void AFPLevelBase::SetSpawnValues()
+{
+}
+
 void AFPLevelBase::SetTimer()
 {
     UE_LOG(LogTemp, Log, TEXT("AFPLevelBase::SetTimer"));
@@ -101,13 +119,13 @@ void AFPLevelBase::SetTimer()
     FTimerHandle PlayerControlable;
 
     GetWorldTimerManager().SetTimer(
-        PortalHandle, this, &AFPLevelBase::SpawnPortal, TimeSpawnPortal, false);
+        PortalHandle, this, &AFPLevelBase::SpawnPortal, LevelDatas->LevelBase.TimeSpawnPortal, false);
 
     GetWorldTimerManager().SetTimer(
-        GameStartHandle, this, &AFPLevelBase::SpawnPlayer, TimeSpawnPlayer, false);
+        GameStartHandle, this, &AFPLevelBase::SpawnPlayer, LevelDatas->LevelBase.TimeSpawnPlayer, false);
 
     GetWorldTimerManager().SetTimer(
-        CountdownStartHandle, this, &AFPLevelBase::StartCountdown, TimeCountDownStarts, false);
+        CountdownStartHandle, this, &AFPLevelBase::StartCountdown, LevelDatas->LevelBase.TimeCountDownStarts, false);
 
     GetWorldTimerManager().SetTimer(
         PlayerControlable, this, &AFPLevelBase::PlayerControlable, 1.0f, false);
