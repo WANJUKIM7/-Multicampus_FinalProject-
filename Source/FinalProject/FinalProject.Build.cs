@@ -19,7 +19,8 @@ public class FinalProject : ModuleRules
 			"EnhancedInput",
 			"GameplayTags",
 			"UMG",
-			"Niagara"
+			"OnlineSubsystemSteam",
+			"OnlineSubsystem"
 		});
 	}
 }
