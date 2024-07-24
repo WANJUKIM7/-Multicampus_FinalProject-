@@ -39,5 +39,5 @@ void AFPLevelDerived05::SpawnCamera()
 
 void AFPLevelDerived05::SetSpawnValues()
 {
-	LevelDatas->LevelBase.PlayerSpawnLocation = LevelDatas->Level02.PlayerSpawnLocation;
+	LevelDatas->LevelBase.PlayerSpawnLocation = LevelDatas->Level05.PlayerSpawnLocation;
 }

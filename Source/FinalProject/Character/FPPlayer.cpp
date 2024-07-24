@@ -182,7 +182,6 @@ void AFPPlayer::SetMovementReset()
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
 	GetCharacterMovement()->MaxAcceleration = 2048.0f;
 	GetCharacterMovement()->GroundFriction = 8.0f;
-	GetCharacterMovement()->GravityScale = 1.75f;
 }
 
 void AFPPlayer::SetMovementVelocity(float Value)

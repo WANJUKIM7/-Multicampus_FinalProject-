@@ -42,7 +42,7 @@ void AFPLevelBase::BeginPlay()
     //SetMappingContext();
     SpawnCamera();
     SetTimer();
-    
+
     Super::BeginPlay();
 }
 
@@ -75,6 +75,7 @@ void AFPLevelBase::PlayerSetting()
         Player->GetController();
         Player->SetActorLocation(LevelDatas->LevelBase.PlayerSpawnLocation);
         Player->SetGravityScale(0.0f);
+        Player->SetMovementReset();
         Player->SetActorHiddenInGame(true);
         UE_LOG(LogTemp, Log, TEXT("Player obtained from GameMode: %s"), *Player->GetName());
     }
@@ -141,7 +142,7 @@ void AFPLevelBase::SpawnPlayer()
     UE_LOG(LogTemp, Log, TEXT("SpawnPlayer"));
     if (Player)
     {
-        Player->SetMovementReset();
+        Player->SetGravityScale(1.75f);
         Player->SetActorHiddenInGame(false);
     }
 }
