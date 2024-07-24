@@ -270,6 +270,14 @@ void AFPPlayer::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPr
 	}
 }
 
+void AFPPlayer::UpdatePlayerState()
+{
+	if (AFPPlayerState* PS = GetPlayerState<AFPPlayerState>())
+	{
+		PS->SetAlive(!bIsDead);
+	}
+}
+
 void AFPPlayer::DestroyPlayer()
 {
 	if (IsValid(this))

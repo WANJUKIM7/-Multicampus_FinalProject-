@@ -5,9 +5,6 @@
 #include "Actors/FP01Bomb.h"
 
 AFPLevelDerived01::AFPLevelDerived01()
-	: Super()
-	, Bomb(nullptr)
-	, BombClass(nullptr)
 {
 	//LevelDatas->LevelBase.CameraSpawnLocation = FVector(0.0f, 800.0f, 300.0f);
 }

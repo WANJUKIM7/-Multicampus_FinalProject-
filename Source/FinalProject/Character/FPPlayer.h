@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "FPCharacter.h"
+#include "GameMode/FPPlayerState.h"
 #include "FPPlayer.generated.h"
 
 UENUM(BlueprintType)
@@ -79,6 +80,8 @@ private:
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
+	UFUNCTION()
+	void UpdatePlayerState();
 public:
 	UFUNCTION(BlueprintCallable)
 	void DestroyPlayer();

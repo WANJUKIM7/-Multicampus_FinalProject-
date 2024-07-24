@@ -17,12 +17,23 @@ public:
 	AFPGameMode();
 
 	AFPPlayer* GetSpawnedPlayer() const;
+
+	UFUNCTION(BlueprintCallable)
+	TArray<AFPPlayer*> GetAllPlayers() const;
+
+	virtual void PostLogin(APlayerController* NewPlayer) override;
+	virtual void Logout(AController* Exiting) override;
 protected:
 	virtual void BeginPlay() override;
 
 private:
 	UPROPERTY()
 	AFPPlayer* SpawnedPlayer;
+
+	void HandlePlayerDeath();
+
+private:
+	TArray<AFPPlayer*> Players;
 };
 
 

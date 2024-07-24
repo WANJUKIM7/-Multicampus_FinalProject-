@@ -30,8 +30,8 @@ public:
 	void SpawnBomb();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	TObjectPtr<class AFP01Bomb> Bomb;
+	TObjectPtr<class AFP01Bomb> Bomb = nullptr;
 
-	UPROPERTY()
-	TSubclassOf<AFP01Bomb> BombClass;
+	UPROPERTY(VisibleAnywhere)
+	TSubclassOf<AFP01Bomb> BombClass = nullptr;
 };

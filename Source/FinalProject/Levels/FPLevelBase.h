@@ -8,6 +8,7 @@
 #include "Character/FPPlayerController.h"
 #include "Character/FPPlayer.h"
 #include "Data/FPLevelDatas.h"
+#include "GameMode/FPGameState.h"
 #include "FPLevelBase.generated.h"
 
 /**
@@ -40,7 +41,7 @@ protected:
 	void StartCountdown();
 	void DestroyCountdownWidget();
 	void PlayerControlable();
-
+	void CheckGameState();
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<class AFPPlayer> Player = nullptr;
@@ -59,25 +60,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
     TObjectPtr<class UFPLevelDatas> LevelDatas;
-
-	/*UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	FVector PlayerSpawnLocation = FVector(1000.0f, 1000.0f, 500.0f);
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	FVector CameraSpawnLocation = FVector(-700.0f, 780.0f, 1000.0f);
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	FRotator CameraSpawnRotation = FRotator(-40.0f, 0.0f, 0.0f);
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float TimeSpawnPortal = 0.5f;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float TimeSpawnPlayer = 1.0f;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float TimeCountDownStarts = 3.0f;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float TimeGameStarts = 8.0f;*/
+//private:
+//	UPROPERTY()
+//	TObjectPtr<AFPGameMode> GameMode;
 };

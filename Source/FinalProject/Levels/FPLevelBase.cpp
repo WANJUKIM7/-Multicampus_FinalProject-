@@ -180,3 +180,16 @@ void AFPLevelBase::PlayerControlable()
     UE_LOG(LogTemp, Log, TEXT("PlayerControlable"));
     PlayerController->EnableInput(PlayerController);
 }
+
+void AFPLevelBase::CheckGameState()
+{
+    if (AGameStateBase* GameState = UGameplayStatics::GetGameState(this))
+	{
+		AFPGameState* FPGameState = Cast<AFPGameState>(GameState);
+		if (FPGameState && FPGameState->IsGameOver())
+		{
+			// Handle game over logic here
+			UE_LOG(LogTemp, Log, TEXT("Game Over!"));
+		}
+	}
+}

@@ -5,6 +5,7 @@
 #include "Components/SpotLightComponent.h"
 #include "Components/SphereComponent.h"
 #include "Character/FPPlayer.h"
+#include "FP02BurnParticle.h"
 
 // Sets default values
 AFP02Spotlight::AFP02Spotlight()
@@ -57,6 +58,8 @@ void AFP02Spotlight::Tick(float DeltaTime)
 		NewHP = FMath::Clamp(Player->GetHP() - PerDamage, 0.0f, Player->GetHP() - PerDamage);
 		Player->SetHP(NewHP);
 		Player->UpdateHPUI(NewHP);
+		AFP02BurnParticle* Particle = GetWorld()->SpawnActor<AFP02BurnParticle>(Player->GetActorLocation(), FRotator(0.0f, 0.0f, 0.0f));
+		
 		//UE_LOG(LogTemp, Log, TEXT("AFP02Spotlight::Tick"));
 	}
 }
