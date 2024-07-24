@@ -75,7 +75,8 @@ struct FLevel03
     GENERATED_BODY()
 
 public:
-    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float TimePlatformsBreakLoop = 3.0f;
 };
 
 USTRUCT(BlueprintType)
