@@ -3,7 +3,7 @@
 
 #include "Actors/FP08RotateAuto.h"
 #include "System/FPAssetManager.h"
-#include "Data/FPLevelData.h"
+#include "Data/FPLevelAssets.h"
 
 // Sets default values
 AFP08RotateAuto::AFP08RotateAuto()
@@ -22,7 +22,7 @@ void AFP08RotateAuto::BeginPlay()
 	Super::BeginPlay();
 	
 	// Set Mesh, Material
-	if (const UFPLevelData* LevelData = UFPAssetManager::GetAssetByName<UFPLevelData>("LevelData"))
+	if (const UFPLevelAssets* LevelData = UFPAssetManager::GetAssetByName<UFPLevelAssets>("LevelAsset"))
 	{
 		if (LevelData->Level08Assets[0].RotatingPlatform)
 		{

@@ -5,7 +5,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "System/FPAssetManager.h"
-#include "Data/FPLevelData.h"
+#include "Data/FPLevelAssets.h"
 
 // Sets default values
 AFP06Train::AFP06Train()
@@ -26,7 +26,7 @@ void AFP06Train::BeginPlay()
 	Super::BeginPlay();
 	
 	// Set Mesh, Material
-	if (const UFPLevelData* LevelData = UFPAssetManager::GetAssetByName<UFPLevelData>("LevelData"))
+	if (const UFPLevelAssets* LevelData = UFPAssetManager::GetAssetByName<UFPLevelAssets>("LevelAsset"))
 	{
 		if (LevelData->Level06Assets[0].Train)
 		{

@@ -221,6 +221,11 @@ void AFPPlayer::UpdateHPUI(float NewHP)
 	PlayerHPUI->UpdateHP(NewHP);
 }
 
+void AFPPlayer::DestroyActor()
+{
+	Destroy();
+}
+
 void AFPPlayer::SetHP(float NewHP)
 {
 	HP = NewHP;
@@ -272,7 +277,10 @@ void AFPPlayer::DestroyPlayer()
 		if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
 		{
 			PlayerController->DisableInput(PlayerController);
-			Destroy();
+			SetIsDead(true);
+			
+			FTimerHandle DeadHandle;
+			GetWorldTimerManager().SetTimer(DeadHandle, this, &AFPPlayer::DestroyActor, 5.0f, false);
 		}
 	}
 }

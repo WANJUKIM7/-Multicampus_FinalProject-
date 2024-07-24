@@ -47,10 +47,14 @@ public:
 	void SetMovementGroundFriction(float Value);
 	void SpawnPlayerHPUI();
 	void UpdateHPUI(float NewHP);
+	void DestroyActor();
 	void SetCurrentLevel(ECurrentLevel level) { E_CurrentLevel = level; }
 
 	float GetHP() { return HP; }
 	void SetHP(float NewHP);
+
+	bool GetIsDead() { return bIsDead; }
+	void SetIsDead(bool IsDead) {  bIsDead = IsDead; }
 
 	bool GetIsInteracting() { return bIsInteracting; }
 	void SetIsInteracting(bool IsInteracting) {  bIsInteracting = IsInteracting; }
@@ -102,6 +106,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float HP = 100.0f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool bIsDead = false;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	bool bIsInteracting = false;

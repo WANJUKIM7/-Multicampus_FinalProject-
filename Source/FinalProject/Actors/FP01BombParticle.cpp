@@ -4,7 +4,7 @@
 #include "Actors/FP01BombParticle.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "System/FPAssetManager.h"
-#include "Data/FPLevelData.h"
+#include "Data/FPLevelAssets.h"
 
 // Sets default values
 AFP01BombParticle::AFP01BombParticle()
@@ -24,7 +24,7 @@ void AFP01BombParticle::BeginPlay()
 	Super::BeginPlay();
 
 	// Set ParticleSystem
-	if (const UFPLevelData* LevelData = UFPAssetManager::GetAssetByName<UFPLevelData>("LevelData"))
+	if (const UFPLevelAssets* LevelData = UFPAssetManager::GetAssetByName<UFPLevelAssets>("LevelAsset"))
 	{
 		if (LevelData->Level01Assets[0].BombExplode)
 		{

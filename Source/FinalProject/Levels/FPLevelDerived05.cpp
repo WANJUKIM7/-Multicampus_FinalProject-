@@ -10,6 +10,7 @@ AFPLevelDerived05::AFPLevelDerived05()
 void AFPLevelDerived05::BeginPlay()
 {
 	SetMappingContext();
+	SetSpawnValues();
 	Super::BeginPlay();
 
 	Player->SetCurrentLevel(ECurrentLevel::E_Level05);
@@ -34,4 +35,9 @@ void AFPLevelDerived05::SetMappingContext()
 
 void AFPLevelDerived05::SpawnCamera()
 {
+}
+
+void AFPLevelDerived05::SetSpawnValues()
+{
+	LevelDatas->LevelBase.PlayerSpawnLocation = LevelDatas->Level02.PlayerSpawnLocation;
 }

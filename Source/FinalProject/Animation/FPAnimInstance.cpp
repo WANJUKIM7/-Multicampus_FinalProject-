@@ -37,4 +37,5 @@ void UFPAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	bIsFalling = MovementComponent->IsFalling();
 
 	bIsInteracting = Character->GetIsInteracting();
+	bIsDead = Character->GetIsDead();
 }

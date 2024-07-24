@@ -3,7 +3,7 @@
 
 #include "Actors/FP05InclinePlatform.h"
 #include "System/FPAssetManager.h"
-#include "Data/FPLevelData.h"
+#include "Data/FPLevelAssets.h"
 
 // Sets default values
 AFP05InclinePlatform::AFP05InclinePlatform()
@@ -29,7 +29,7 @@ void AFP05InclinePlatform::BeginPlay()
 {
 	Super::BeginPlay();
 	// Set Mesh, Material
-	if (const UFPLevelData* LevelData = UFPAssetManager::GetAssetByName<UFPLevelData>("LevelData"))
+	if (const UFPLevelAssets* LevelData = UFPAssetManager::GetAssetByName<UFPLevelAssets>("LevelAsset"))
 	{
 		if (LevelData->Level05Assets[0].InclinePlatform)
 		{

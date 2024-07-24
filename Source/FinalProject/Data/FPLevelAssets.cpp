@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Data/FPLevelData.h"
+#include "Data/FPLevelAssets.h"
 #include "FPLogChannels.h"
 
-const UStaticMesh* UFPLevelData::FindMeshesByTag(const FGameplayTag& InputTag) const
+const UStaticMesh* UFPLevelAssets::FindMeshesByTag(const FGameplayTag& InputTag) const
 {
     for (const FPAssetMeshes& Meshes : AssetMeshes)
 	{
@@ -19,7 +19,7 @@ const UStaticMesh* UFPLevelData::FindMeshesByTag(const FGameplayTag& InputTag) c
 	return nullptr;
 }
 
-const UMaterial* UFPLevelData::FindMaterialsByTag(const FGameplayTag& InputTag) const
+const UMaterial* UFPLevelAssets::FindMaterialsByTag(const FGameplayTag& InputTag) const
 {
 	for (const FPAssetMaterials& Material : AssetMaterials)
 	{
@@ -34,7 +34,7 @@ const UMaterial* UFPLevelData::FindMaterialsByTag(const FGameplayTag& InputTag) 
 	return nullptr;
 }
 
-const UParticleSystem* UFPLevelData::FindParticlesByTag(const FGameplayTag& InputTag) const
+const UParticleSystem* UFPLevelAssets::FindParticlesByTag(const FGameplayTag& InputTag) const
 {
 	for (const FPAssetParticles& Particles : AssetParticles)
 	{

@@ -5,7 +5,7 @@
 #include "Character/FPPlayer.h"
 #include "FP01BombParticle.h"
 #include "System/FPAssetManager.h"
-#include "Data/FPLevelData.h"
+#include "Data/FPLevelAssets.h"
 #include "FPGameplayTags.h"
 #include "Components/SpotLightComponent.h"
 
@@ -35,7 +35,7 @@ void AFP01Bomb::BeginPlay()
 	Super::BeginPlay();
 
 	// Set Mesh, Material
-	if (const UFPLevelData* LevelData = UFPAssetManager::GetAssetByName<UFPLevelData>("LevelData"))
+	if (const UFPLevelAssets* LevelData = UFPAssetManager::GetAssetByName<UFPLevelAssets>("LevelAsset"))
 	{
 		if (LevelData->Level01Assets[0].Bomb)
 		{

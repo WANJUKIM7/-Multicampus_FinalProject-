@@ -43,4 +43,7 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite)
 	bool bIsInteracting = false;
+
+	UPROPERTY(BlueprintReadWrite)
+	bool bIsDead = false;
 };

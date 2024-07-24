@@ -4,7 +4,7 @@
 #include "Actors/FP04Rock.h"
 #include "Components/SphereComponent.h"
 #include "System/FPAssetManager.h"
-#include "Data/FPLevelData.h"
+#include "Data/FPLevelAssets.h"
 
 // Sets default values
 AFP04Rock::AFP04Rock()
@@ -31,7 +31,7 @@ void AFP04Rock::BeginPlay()
 	Super::BeginPlay();
 	
 	// Set Mesh, Material
-	if (const UFPLevelData* LevelData = UFPAssetManager::GetAssetByName<UFPLevelData>("LevelData"))
+	if (const UFPLevelAssets* LevelData = UFPAssetManager::GetAssetByName<UFPLevelAssets>("LevelAsset"))
 	{
 		if (LevelData->Level04Assets[0].Rock)
 		{

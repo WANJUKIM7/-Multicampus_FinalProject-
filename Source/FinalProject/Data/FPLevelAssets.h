@@ -5,7 +5,7 @@
 #include "GameplayTagContainer.h"
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
-#include "FPLevelData.generated.h"
+#include "FPLevelAssets.generated.h"
 
 USTRUCT()
 struct FPLevelBaseAssets
@@ -201,7 +201,7 @@ public:
  * 
  */
 UCLASS()
-class FINALPROJECT_API UFPLevelData : public UDataAsset
+class FINALPROJECT_API UFPLevelAssets : public UDataAsset
 {
 	GENERATED_BODY()
 

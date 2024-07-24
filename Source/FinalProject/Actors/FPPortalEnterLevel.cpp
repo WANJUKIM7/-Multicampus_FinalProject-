@@ -4,7 +4,7 @@
 #include "Actors/FPPortalEnterLevel.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "System/FPAssetManager.h"
-#include "Data/FPLevelData.h"
+#include "Data/FPLevelAssets.h"
 #include "NiagaraComponent.h"
 
 // Sets default values
@@ -26,7 +26,7 @@ void AFPPortalEnterLevel::BeginPlay()
 	Super::BeginPlay();
 
 	// Set ParticleSystem
-	if (const UFPLevelData* LevelData = UFPAssetManager::GetAssetByName<UFPLevelData>("LevelData"))
+	if (const UFPLevelAssets* LevelData = UFPAssetManager::GetAssetByName<UFPLevelAssets>("LevelAsset"))
 	{
 		if (LevelData->LevelBaseAssets[0].PortalEnter)
 		{

@@ -75,6 +75,9 @@ struct FLevel03
     GENERATED_BODY()
 
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector PlayerSpawnLocation = FVector(1000.0f, 1000.0f, 500.0f);
+
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float TimePlatformsBreakLoop = 3.0f;
 };
@@ -122,7 +125,11 @@ struct FLevel05
     GENERATED_BODY()
 
 public:
-    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector PlayerSpawnLocation = FVector(1000.0f, 1000.0f, 500.0f);
+
+	/*UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FTransform CameraSpawnTransform2 = FTransform();*/
 };
 
 USTRUCT(BlueprintType)
@@ -158,6 +165,15 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FRotator CameraSpawnRotation = FRotator(-40.0f, 0.0f, 0.0f);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FTransform CameraSpawnTransform2 = FTransform();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FTransform TimeTrainLoopTime = FTransform();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector WinLocation = FVector(0.0f, 0.0f, 0.0f);
 };
 
 USTRUCT(BlueprintType)
@@ -166,7 +182,8 @@ struct FLevel08
     GENERATED_BODY()
 
 public:
-    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector PlayerSpawnLocation = FVector(1000.0f, 1000.0f, 500.0f);
 };
 
 /**
