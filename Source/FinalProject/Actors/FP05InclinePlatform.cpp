@@ -11,8 +11,11 @@ AFP05InclinePlatform::AFP05InclinePlatform()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	RootScene = CreateDefaultSubobject<USceneComponent>(TEXT("RootScene"));
+	RootComponent = RootScene;
+
 	InclinePlatform = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("InclinePlatform"));
-	RootComponent = InclinePlatform;
+	InclinePlatform->SetupAttachment(RootScene);
 	InclinePlatform->SetRelativeRotation(FRotator(0.0f, -10.0f, 90.0f));
 	InclinePlatform->SetRelativeScale3D(FVector(1100.0f, 1000.0f, 1100.0f));
 	InclinePlatform->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);

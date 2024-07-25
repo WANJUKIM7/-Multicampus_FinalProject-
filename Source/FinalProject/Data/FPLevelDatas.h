@@ -179,9 +179,6 @@ public:
 	FTransform CameraSpawnTransform2 = FTransform();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FTransform TimeTrainLoopTime = FTransform();
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector WinLocation = FVector(0.0f, 0.0f, 0.0f);
 };
 

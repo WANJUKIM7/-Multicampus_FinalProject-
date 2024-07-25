@@ -25,7 +25,10 @@ public:
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TObjectPtr<UStaticMeshComponent> InclinePlatform;
+	TObjectPtr<class USceneComponent> RootScene = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UStaticMeshComponent> InclinePlatform = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	float InclineValue = 10.0f;
