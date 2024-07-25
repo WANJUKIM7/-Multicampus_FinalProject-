@@ -41,7 +41,7 @@ void AFPLevelDerived03::SpawnCamera()
 
 void AFPLevelDerived03::SetSpawnValues()
 {
-	LevelDatas->LevelBase.PlayerSpawnLocation = LevelDatas->Level02.PlayerSpawnLocation;
+	LevelDatas->LevelBase.PlayerSpawnLocation = LevelDatas->Level03.PlayerSpawnLocation;
 }
 
 void AFPLevelDerived03::BreakPlatforms()

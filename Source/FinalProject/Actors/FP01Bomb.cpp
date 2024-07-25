@@ -35,11 +35,11 @@ void AFP01Bomb::BeginPlay()
 	Super::BeginPlay();
 
 	// Set Mesh, Material
-	if (const UFPLevelAssets* LevelData = UFPAssetManager::GetAssetByName<UFPLevelAssets>("LevelAsset"))
+	if (const UFPLevelAssets* LevelAsset = UFPAssetManager::GetAssetByName<UFPLevelAssets>("LevelAsset"))
 	{
-		if (LevelData->Level01Assets[0].Bomb)
+		if (LevelAsset->Level01Assets[0].Bomb)
 		{
-			Bomb->SetStaticMesh(LevelData->Level01Assets[0].Bomb);
+			Bomb->SetStaticMesh(LevelAsset->Level01Assets[0].Bomb);
 			UE_LOG(LogTemp, Log, TEXT("Bomb Found!"));
 		}
 		else
@@ -47,9 +47,9 @@ void AFP01Bomb::BeginPlay()
 			UE_LOG(LogTemp, Warning, TEXT("Bomb Not Founded!"));
 		}
 
-		if (LevelData->Level01Assets[0].BombMaterial)
+		if (LevelAsset->Level01Assets[0].BombMaterial)
 		{
-			Bomb->SetMaterial(0, LevelData->Level01Assets[0].BombMaterial);
+			Bomb->SetMaterial(0, LevelAsset->Level01Assets[0].BombMaterial);
 		}
 
 	}

@@ -35,12 +35,12 @@ protected:
 	TObjectPtr<class USphereComponent> SphereCollision;
 
 public:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	FVector SizeSmall = FVector(0.05f, 0.05f, 0.05f);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector SizeSmall = FVector(0.2f, 0.2f, 0.2f);
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	FVector SizeMiddle = FVector(0.07f, 0.07f, 0.07f);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector SizeMiddle = FVector(0.4f, 0.4f, 0.4f);
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	FVector SizeLarge = FVector(0.1f, 0.1f, 0.1f);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector SizeLarge = FVector(0.6f, 0.6f, 0.6f);
 };

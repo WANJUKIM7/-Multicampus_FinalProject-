@@ -50,7 +50,7 @@ void AFP04Rock::BeginPlay()
 
 	}
 
-	SetLifeSpan(10.0f);
+	//SetLifeSpan(10.0f);
 
 	int32 RandomInteger = FMath::RandRange(0, 2);
 	switch (RandomInteger)

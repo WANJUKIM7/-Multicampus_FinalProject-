@@ -15,8 +15,11 @@ AFP03Platform::AFP03Platform()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	RootScene = CreateDefaultSubobject<USceneComponent>(TEXT("RootScene"));
+	RootComponent = RootScene;
+
 	Platform = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Platform"));
-	RootComponent = Platform;
+	Platform->SetupAttachment(RootScene);
 	Platform->SetRelativeScale3D(FVector(1.0f, 1.0f, 0.1f));
 	Platform->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	Platform->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);

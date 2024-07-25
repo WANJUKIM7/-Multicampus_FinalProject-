@@ -41,11 +41,14 @@ public:
 
 	bool GetIsTimePassed() { return IsTimePassed; }
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	TObjectPtr<UStaticMeshComponent> Platform;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<class USceneComponent> RootScene = nullptr;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision")
-	TObjectPtr<class UBoxComponent> BoxCollision;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UStaticMeshComponent> Platform = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<class UBoxComponent> BoxCollision = nullptr;
 
 	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<class UCurveFloat> FloatCurve;*/

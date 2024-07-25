@@ -67,6 +67,12 @@ public:
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector SpotLightCenterLocation = FVector(500.0f, 500.0f, -260.0f);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MaxXOffset = 1500.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MaxYOffset = 1500.0f;
 };
 
 USTRUCT(BlueprintType)
@@ -117,6 +123,9 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float TimeChangeSpawnLoop2 = 20.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float TimeLife = 15.0f;
 };
 
 USTRUCT(BlueprintType)

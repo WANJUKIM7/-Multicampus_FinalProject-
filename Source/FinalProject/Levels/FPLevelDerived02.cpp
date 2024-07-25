@@ -68,7 +68,7 @@ void AFPLevelDerived02::SpawnSpotLight()
 	FRotator Rotation(0.0f, 0.0f, 0.0f);*/
 	//AFP02Spotlight* Light = GetWorld()->SpawnActor<AFP02Spotlight>(Location, Rotation);
 	AFP02Spotlight* Light = Cast<AFP02Spotlight>(GetWorld()->SpawnActor(ActorClass));
-	Light->SetValues(LevelDatas->Level02.SpotLightCenterLocation);
+	Light->SetValues(LevelDatas->Level02.SpotLightCenterLocation, LevelDatas->Level02.MaxXOffset, LevelDatas->Level02.MaxYOffset);
 	//UE_LOG(LogTemp, Log, TEXT("SpawnSpotLight"));
 }
 

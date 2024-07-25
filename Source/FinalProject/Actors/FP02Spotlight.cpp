@@ -6,6 +6,8 @@
 #include "Components/SphereComponent.h"
 #include "Character/FPPlayer.h"
 #include "FP02BurnParticle.h"
+#include "Data/FPLevelAssets.h"
+#include "FPGameplayTags.h"
 
 // Sets default values
 AFP02Spotlight::AFP02Spotlight()
@@ -85,12 +87,14 @@ void AFP02Spotlight::OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 	//Player->SetSpotLightCounts(Player->GetSpotLightCounts() - 1u);
 }
 
-void AFP02Spotlight::SetValues(FVector SpawnLocation)
+void AFP02Spotlight::SetValues(FVector SpawnLocation, float NewMaxXOffset, float NewMaxYOffset)
 {
 	StartLocation = SpawnLocation;
 	EndLocation = SpawnLocation;
 	SetStartLocation();
 	SetEndLocation();
+	MaxXOffset = NewMaxXOffset;
+	MaxYOffset = NewMaxXOffset;
 	/*UE_LOG(LogTemp, Log, TEXT("StartLocation.X: %f, StartLocation.Y: %f, StartLocation.Z: %f"),StartLocation.X, StartLocation.Y,StartLocation.Z);
 	UE_LOG(LogTemp, Log, TEXT("EndLocation.X: %f, EndLocation.Y: %f, EndLocation.Z: %f"),EndLocation.X, EndLocation.Y,EndLocation.Z);*/
 }
@@ -98,8 +102,6 @@ void AFP02Spotlight::SetValues(FVector SpawnLocation)
 void AFP02Spotlight::SetStartLocation()
 {
 	RandomInteger = FMath::RandRange(0, 3);
-	float MaxXOffset = 1000.0f;
-	float MaxYOffset = 1000.0f;
 	float RandomXOffset = FMath::RandRange(-MaxXOffset, MaxXOffset);
 	float RandomYOffset = FMath::RandRange(-MaxYOffset, MaxYOffset);
 	//UE_LOG(LogTemp, Log, TEXT("SetStartLocation"));
@@ -139,8 +141,6 @@ void AFP02Spotlight::SetStartLocation()
 
 void AFP02Spotlight::SetEndLocation()
 {
-	float MaxXOffset = 1000.0f;
-	float MaxYOffset = 1000.0f;
 	float RandomXOffset = FMath::RandRange(-MaxXOffset, MaxXOffset);
 	float RandomYOffset = FMath::RandRange(-MaxYOffset, MaxYOffset);
 	/*UE_LOG(LogTemp, Log, TEXT("SetEndLocation"));

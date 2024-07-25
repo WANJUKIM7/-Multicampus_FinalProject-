@@ -30,7 +30,7 @@ private:
 	UFUNCTION()
 	void OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 public:
-	void SetValues(FVector SpawnLocation);
+	void SetValues(FVector SpawnLocation, float NewMaxXOffset, float NewMaxYOffset);
 	void SetStartLocation();
 	void SetEndLocation();
 	
@@ -54,5 +54,11 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	float PerDamage = 5.0f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float MaxXOffset = 1000.0f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float MaxYOffset = 1000.0f;
 };
 
