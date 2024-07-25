@@ -54,6 +54,14 @@ void AFP06Train::BeginPlay()
 		{
 			Train->SetMaterial(0, LevelData->Level06Assets[0].TrainMaterial3);
 		}
+		if (LevelData->Level06Assets[0].TrainMaterial4)
+		{
+			Train->SetMaterial(0, LevelData->Level06Assets[0].TrainMaterial4);
+		}
+		if (LevelData->Level06Assets[0].TrainMaterial5)
+		{
+			Train->SetMaterial(0, LevelData->Level06Assets[0].TrainMaterial5);
+		}
 	}
 }
 

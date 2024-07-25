@@ -48,6 +48,11 @@ void AFP04Rock::BeginPlay()
 			Rock->SetMaterial(0, LevelData->Level04Assets[0].RockMaterial);
 		}
 
+		if (LevelData->Level04Assets[0].RockMaterialInstance)
+		{
+			Rock->SetMaterial(0, LevelData->Level04Assets[0].RockMaterialInstance);
+		}
+
 	}
 
 	//SetLifeSpan(10.0f);

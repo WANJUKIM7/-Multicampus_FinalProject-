@@ -24,7 +24,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<UStaticMeshComponent> InclinePlatform;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)

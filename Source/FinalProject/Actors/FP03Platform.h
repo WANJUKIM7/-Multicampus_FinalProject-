@@ -50,6 +50,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<class UBoxComponent> BoxCollision = nullptr;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<class UBoxComponent> BoxCollision1 = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<class UBoxComponent> BoxCollision2 = nullptr;
+
 	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<class UCurveFloat> FloatCurve;*/
 

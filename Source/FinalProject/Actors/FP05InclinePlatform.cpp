@@ -13,7 +13,8 @@ AFP05InclinePlatform::AFP05InclinePlatform()
 
 	InclinePlatform = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("InclinePlatform"));
 	RootComponent = InclinePlatform;
-	InclinePlatform->SetRelativeScale3D(FVector(18.0f, 18.0f, 1.0f));
+	InclinePlatform->SetRelativeRotation(FRotator(0.0f, -10.0f, 90.0f));
+	InclinePlatform->SetRelativeScale3D(FVector(1100.0f, 1000.0f, 1100.0f));
 	InclinePlatform->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 	InclinePlatform->SetCollisionProfileName(FName("PhysicsActor"));
 	InclinePlatform->SetSimulatePhysics(true);
@@ -41,11 +42,15 @@ void AFP05InclinePlatform::BeginPlay()
 			UE_LOG(LogTemp, Warning, TEXT("InclinePlatform Not Founded!"));
 		}
 
-		if (LevelData->Level05Assets[0].InclinePlatformMaterial)
+		if (LevelData->Level05Assets[0].InclinePlatformMaterial0)
 		{
-			InclinePlatform->SetMaterial(0, LevelData->Level05Assets[0].InclinePlatformMaterial);
+			InclinePlatform->SetMaterial(0, LevelData->Level05Assets[0].InclinePlatformMaterial0);
 		}
 
+		if (LevelData->Level05Assets[0].InclinePlatformMaterial1)
+		{
+			InclinePlatform->SetMaterial(0, LevelData->Level05Assets[0].InclinePlatformMaterial1);
+		}
 	}
 }
 

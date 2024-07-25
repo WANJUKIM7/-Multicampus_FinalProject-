@@ -74,6 +74,7 @@ void AFPLevelBase::PlayerSetting()
     {
         Player->GetController();
         Player->SetActorLocation(LevelDatas->LevelBase.PlayerSpawnLocation);
+        Player->SetActorRelativeRotation(FRotator(0.0f, 0.0f, 0.0f));
         Player->SetGravityScale(0.0f);
         Player->SetMovementReset();
         Player->SetActorHiddenInGame(true);

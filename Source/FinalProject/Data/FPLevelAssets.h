@@ -66,6 +66,9 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UMaterial> PlatformMaterial;
+
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UMaterialInstance> PlatformMaterialInstance;
 };
 
 USTRUCT()
@@ -82,6 +85,9 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UMaterial> RockMaterial;
+
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UMaterialInstance> RockMaterialInstance;
 };
 
 USTRUCT()
@@ -103,7 +109,10 @@ public:
 	TObjectPtr<UStaticMesh> InclinePlatform;
 	
 	UPROPERTY(EditDefaultsOnly)
-	TObjectPtr<UMaterial> InclinePlatformMaterial;
+	TObjectPtr<UMaterial> InclinePlatformMaterial0;
+
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UMaterial> InclinePlatformMaterial1;
 
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UParticleSystem> HitEffect;
@@ -132,6 +141,12 @@ public:
 
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UMaterial> TrainMaterial3;
+
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UMaterial> TrainMaterial4;
+
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UMaterial> TrainMaterial5;
 };
 
 USTRUCT()

@@ -27,9 +27,25 @@ AFP03Platform::AFP03Platform()
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
 	BoxCollision->SetupAttachment(Platform);
 	BoxCollision->SetCollisionProfileName(TEXT("OverlapAll"));
-	BoxCollision->SetRelativeLocation(FVector(0.0f, 0.0f, 50.0f));
-	BoxCollision->SetRelativeScale3D(FVector(1.5f, 1.5f, 1.0f));
+	BoxCollision->SetRelativeLocation(FVector(0.0f, -0.014286, -0.130185));
+	BoxCollision->SetRelativeScale3D(FVector(0.0024f, 0.0002f, 0.00405f));
 	BoxCollision->SetHiddenInGame(false);
+	
+	BoxCollision1 = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision1"));
+	BoxCollision1->SetupAttachment(Platform);
+	BoxCollision1->SetCollisionProfileName(TEXT("OverlapAll"));
+	BoxCollision1->SetRelativeLocation(FVector(0.0f, -0.014286f, -0.130185f));
+	BoxCollision1->SetRelativeRotation(FRotator(60.0f, 0.0f, 0.0f));
+	BoxCollision1->SetRelativeScale3D(FVector(0.0024f, 0.0002f, 0.00405f));
+	BoxCollision1->SetHiddenInGame(false);
+
+	BoxCollision2 = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision2"));
+	BoxCollision2->SetupAttachment(Platform);
+	BoxCollision2->SetCollisionProfileName(TEXT("OverlapAll"));
+	BoxCollision2->SetRelativeLocation(FVector(0.0f, -0.014286f, -0.130185f));
+	BoxCollision2->SetRelativeRotation(FRotator(120.0f, 0.0f, 0.0f));
+	BoxCollision2->SetRelativeScale3D(FVector(0.0024f, 0.0002f, 0.00405f));
+	BoxCollision2->SetHiddenInGame(false);
 
 	// Change Material
 	//static ConstructorHelpers::FObjectFinder<UMaterial> Material(TEXT("/Script/Engine.Material'/Game/Programming/Materials/MM_Bright.MM_Bright'"));
@@ -68,7 +84,7 @@ void AFP03Platform::BeginPlay()
 
 		if (LevelData->Level03Assets[0].PlatformMaterial)
 		{
-			Platform->SetMaterial(0, LevelData->Level01Assets[0].BombMaterial);
+			Platform->SetMaterial(0, LevelData->Level03Assets[0].PlatformMaterialInstance);
 		}
 
 	}
@@ -78,6 +94,8 @@ void AFP03Platform::BeginPlay()
 
 	// Bind Collision
 	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnBeginOverlap);
+	BoxCollision1->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnBeginOverlap);
+	BoxCollision2->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnBeginOverlap);
 
 	// Change Material
 	FOnTimelineFloat TimelineCallback;
