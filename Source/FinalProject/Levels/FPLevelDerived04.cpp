@@ -14,7 +14,15 @@ void AFPLevelDerived04::BeginPlay()
 	SetSpawnValues();
 	Super::BeginPlay();
 
-	Player->SetCurrentLevel(ECurrentLevel::E_Level04);
+	/*if (Player)
+	{
+		Player->SetCurrentLevel(ECurrentLevel::E_Level04);
+	}
+	else
+	{
+		FP_LOG(LogFP, Warning, TEXT("%s"), TEXT("No Player"));
+	}*/
+
 	LevelDatas->LevelBase.CameraSpawnLocation = FVector(1340.0f, 1390.0f, 570.0f);
 	LevelDatas->LevelBase.CameraSpawnRotation = FRotator(-40.0f, 0.0f, 0.0f);
 }

@@ -3,6 +3,38 @@
 
 #include "GameMode/FPGameState.h"
 #include "FPPlayerState.h"
+#include "FPLogChannels.h"
+#include "Net/UnrealNetwork.h"
+
+//void AFPGameState::HandleBeginPlay()
+//{
+//	FP_LOG(LogFP, Log, TEXT("%s"), TEXT("Begin"));
+//
+//	Super::HandleBeginPlay();
+//
+//	FP_LOG(LogFP, Log, TEXT("%s"), TEXT("End"));
+//}
+//
+//void AFPGameState::OnRep_ReplicatedHasBegunPlay()
+//{
+//	FP_LOG(LogFP, Log, TEXT("%s"), TEXT("Begin"));
+//
+//	Super::OnRep_ReplicatedHasBegunPlay();
+//
+//	FP_LOG(LogFP, Log, TEXT("%s"), TEXT("End"));
+//}
+
+AFPGameState::AFPGameState()
+{
+	RemainingTime = MatchPlayTime;
+}
+
+void AFPGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AFPGameState, RemainingTime);
+}
 
 int32 AFPGameState::GetAlivePlayersCount() const
 {
@@ -25,9 +57,9 @@ bool AFPGameState::IsGameOver() const
 
 void AFPGameState::OnPlayerStateChanged()
 {
+	FP_LOG(LogFP, Log, TEXT("%s"), TEXT("Begin"));
 	if (IsGameOver())
 	{
 		// Handle game over logic here
-		UE_LOG(LogTemp, Log, TEXT("Game Over!"));
 	}
 }

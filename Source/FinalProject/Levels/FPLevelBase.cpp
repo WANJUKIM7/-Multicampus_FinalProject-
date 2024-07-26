@@ -51,13 +51,28 @@ void AFPLevelBase::Tick(float DeltaTime)
     Super::Tick(DeltaTime);
 }
 
+void AFPLevelBase::InitializeLevelSettings()
+{
+}
+
 AFPPlayer* AFPLevelBase::GetPlayerFromGameMode()
 {
-    AGameModeBase* GameMode = UGameplayStatics::GetGameMode(this);
-    if (AFPGameMode* MyGameMode = Cast<AFPGameMode>(GameMode))
+    if (HasAuthority())
     {
-        UE_LOG(LogTemp, Log, TEXT("GetGameMode"));
-        return MyGameMode->GetSpawnedPlayer();
+        AGameModeBase* GameMode = UGameplayStatics::GetGameMode(this);
+        if (AFPGameMode* MyGameMode = Cast<AFPGameMode>(GameMode))
+        {
+            //return MyGameMode->GetSpawnedPlayer();
+        }
+    }
+    else
+    {
+        APlayerController* NewPlayerController = UGameplayStatics::GetPlayerController(this, 0);
+        if (NewPlayerController)
+        {
+            AFPPlayer* NewPlayer = Cast<AFPPlayer>(NewPlayerController->GetPawn());
+            return NewPlayer;
+        }
     }
     return nullptr;
 }
@@ -69,10 +84,9 @@ void AFPLevelBase::StartFadeIn()
 
 void AFPLevelBase::PlayerSetting()
 {
-    Player = GetPlayerFromGameMode();
-    if (Player)
+    //Player = GetPlayerFromGameMode();
+    /*if (Player)
     {
-        Player->GetController();
         Player->SetActorLocation(LevelDatas->LevelBase.PlayerSpawnLocation);
         Player->SetActorRotation(FRotator(0.0f, 0.0f, 0.0f));
         Player->SetGravityScale(0.0f);
@@ -83,7 +97,7 @@ void AFPLevelBase::PlayerSetting()
     else
     {
         UE_LOG(LogTemp, Warning, TEXT("Player doesn't get"));
-    }
+    }*/
 }
 
 void AFPLevelBase::SetMappingContext()
@@ -135,17 +149,17 @@ void AFPLevelBase::SetTimer()
 
 void AFPLevelBase::SpawnPortal()
 {
-    AFPPortalEnterLevel* Particle = GetWorld()->SpawnActor<AFPPortalEnterLevel>(Player->GetActorLocation(), FRotator(0.0f, 0.0f, 0.0f));
+    /*AFPPortalEnterLevel* Particle = GetWorld()->SpawnActor<AFPPortalEnterLevel>(Player->GetActorLocation(), FRotator(0.0f, 0.0f, 0.0f));*/
 }
 
 void AFPLevelBase::SpawnPlayer()
 {
     UE_LOG(LogTemp, Log, TEXT("SpawnPlayer"));
-    if (Player)
+    /*if (Player)
     {
         Player->SetGravityScale(1.75f);
         Player->SetActorHiddenInGame(false);
-    }
+    }*/
 }
 
 void AFPLevelBase::StartCountdown()
@@ -171,7 +185,7 @@ void AFPLevelBase::DestroyCountdownWidget()
 {
     if (Countdown && Countdown->GetUserWidgetObject())
     {
-        Countdown->GetUserWidgetObject()->RemoveFromViewport();
+        Countdown->GetUserWidgetObject()->RemoveFromParent();
         Countdown->DestroyComponent();
         UE_LOG(LogTemp, Log, TEXT("Countdown widget destroyed"));
     }

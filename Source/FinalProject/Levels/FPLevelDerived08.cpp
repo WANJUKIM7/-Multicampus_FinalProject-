@@ -13,7 +13,14 @@ void AFPLevelDerived08::BeginPlay()
     SetSpawnValues();
     Super::BeginPlay();
 
-    Player->SetCurrentLevel(ECurrentLevel::E_Level08);
+    /*if (Player)
+    {
+        Player->SetCurrentLevel(ECurrentLevel::E_Level08);
+    }
+    else
+	{
+		FP_LOG(LogFP, Warning, TEXT("%s"), TEXT("No Player"));
+	}*/
 }
 
 void AFPLevelDerived08::Tick(float DeltaTime)

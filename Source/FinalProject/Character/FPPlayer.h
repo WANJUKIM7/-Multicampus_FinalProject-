@@ -34,7 +34,10 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-
+	/*virtual void PossessedBy(AController* NewController) override;
+	virtual void OnRep_Owner() override;
+	virtual void PostNetInit() override;*/
+	virtual void FellOutOfWorld(const UDamageType& dmgType) override;
 public:
 	virtual void Tick(float DeltaTime) override;
 
@@ -45,7 +48,9 @@ public:
 	void SetMovementReset();
 	void SetMovementVelocity(float Value);
 	void SetMovementAccerlation(float Value);
+	void SetMovementDeceleration(float Value);
 	void SetMovementGroundFriction(float Value);
+	void ResetPlayer();
 	void SpawnPlayerHPUI();
 	void UpdateHPUI(float NewHP);
 	void DestroyActor();
@@ -55,7 +60,7 @@ public:
 	void SetHP(float NewHP);
 
 	bool GetIsDead() { return bIsDead; }
-	void SetIsDead(bool IsDead) {  bIsDead = IsDead; }
+	void SetIsDead(bool IsDead);
 
 	bool GetIsInteracting() { return bIsInteracting; }
 	void SetIsInteracting(bool IsInteracting) {  bIsInteracting = IsInteracting; }
@@ -83,9 +88,6 @@ private:
 	UFUNCTION()
 	void UpdatePlayerState();
 public:
-	UFUNCTION(BlueprintCallable)
-	void DestroyPlayer();
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<class UWidgetComponent> NicknameUI;
 

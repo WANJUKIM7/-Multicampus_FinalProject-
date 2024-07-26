@@ -3,38 +3,39 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/GameModeBase.h"
+#include "Interface/FPGameInterface.h"
+#include "GameFramework/GameMode.h"
 #include "FPGameMode.generated.h"
 
 class AFPPlayer;
 
 UCLASS(minimalapi)
-class AFPGameMode : public AGameModeBase
+class AFPGameMode : public AGameMode, public IFPGameInterface
 {
 	GENERATED_BODY()
 
 public:
 	AFPGameMode();
 
-	AFPPlayer* GetSpawnedPlayer() const;
+	virtual FTransform GetRandomStartTransform() const;
+	virtual void OnPlayerDead();
 
-	UFUNCTION(BlueprintCallable)
-	TArray<AFPPlayer*> GetAllPlayers() const;
+	/*virtual void PreLogin(const FString& Options, const FString& Address, const FUniqueNetIdRepl& UniqueId, FString& ErrorMessage) override;
+	virtual APlayerController* Login(UPlayer* NewPlayer, ENetRole InRemoteRole, const FString& Portal, const FString& Options, const FUniqueNetIdRepl& UniqueId, FString& ErrorMessage) override;
+	virtual void PostLogin(APlayerController* NewPlayer) override;*/
+	virtual void StartPlay() override;
+	void InitializeLevelSettings();
+	//void GetSpawnedPlayer();
 
-	virtual void PostLogin(APlayerController* NewPlayer) override;
-	virtual void Logout(AController* Exiting) override;
+	/*UPROPERTY()
+	AFPPlayer* SpawnedPlayer;*/
 protected:
-	virtual void BeginPlay() override;
+	virtual void PostInitializeComponents() override;
+	virtual void DefaultGameTimer();
+	void FinishMatch();
 
-private:
-	UPROPERTY()
-	AFPPlayer* SpawnedPlayer;
+	FTimerHandle GameTimerHandle;
 
-	void HandlePlayerDeath();
-
-private:
-	TArray<AFPPlayer*> Players;
+protected:
+	TArray<TObjectPtr<class APlayerStart>> PlayerStartArray;
 };
-
-
-

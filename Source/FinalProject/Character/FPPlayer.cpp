@@ -14,6 +14,8 @@
 #include "Engine/DirectionalLight.h"
 #include "Actors/FP07PointLight.h"
 #include "Components/SpotLightComponent.h"
+#include "FPLogChannels.h"
+#include "Interface/FPGameInterface.h"
 
 AFPPlayer::AFPPlayer()
 {
@@ -105,6 +107,59 @@ void AFPPlayer::BeginPlay()
 	GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &ThisClass::OnHit);
 }
 
+//void AFPPlayer::PossessedBy(AController* NewController)
+//{
+//	/*FP_LOG(LogFP, Log, TEXT("%s %s"), TEXT("Begin"), *GetName());
+//	AActor* OwnerActor = GetOwner();
+//	if (OwnerActor)
+//	{
+//		FP_LOG(LogFP, Log, TEXT("Owner : %s"), *OwnerActor->GetName());
+//	}
+//	else
+//	{
+//		FP_LOG(LogFP, Log, TEXT("%s"), TEXT("No Owner"));
+//	}
+//
+//	Super::PossessedBy(NewController);
+//
+//	OwnerActor = GetOwner();
+//	if (OwnerActor)
+//	{
+//		FP_LOG(LogFP, Log, TEXT("Owner : %s"), *OwnerActor->GetName());
+//	}
+//	else
+//	{
+//		FP_LOG(LogFP, Log, TEXT("%s"), TEXT("No Owner"));
+//	}
+//
+//	FP_LOG(LogFP, Log, TEXT("%s %s"), TEXT("End"), *GetName());*/
+//}
+
+//void AFPPlayer::OnRep_Owner()
+//{
+//	FP_LOG(LogFP, Log, TEXT("%s %s"), TEXT("Begin"), *GetName());
+//
+//	Super::OnRep_Owner();
+//
+//	FP_LOG(LogFP, Log, TEXT("%s %s"), TEXT("End"), *GetName());
+//}
+//
+//void AFPPlayer::PostNetInit()
+//{
+//	FP_LOG(LogFP, Log, TEXT("%s %s"), TEXT("Begin"), *GetName());
+//
+//	Super::PostNetInit();
+//
+//	FP_LOG(LogFP, Log, TEXT("%s"), TEXT("End"));
+//}
+
+void AFPPlayer::FellOutOfWorld(const UDamageType& dmgType)
+{
+	FP_LOG(LogFP, Log, TEXT("%s"), TEXT("Begin"));
+	Super::FellOutOfWorld(dmgType);
+	SetIsDead(true);
+}
+
 void AFPPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -194,9 +249,36 @@ void AFPPlayer::SetMovementAccerlation(float Value)
 	GetCharacterMovement()->MaxAcceleration = Value;
 }
 
+void AFPPlayer::SetMovementDeceleration(float Value)
+{
+	GetCharacterMovement()->BrakingDecelerationWalking = Value;
+}
+
 void AFPPlayer::SetMovementGroundFriction(float Value)
 {
 	GetCharacterMovement()->GroundFriction = Value;
+}
+
+void AFPPlayer::ResetPlayer()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if (AnimInstance)
+	{
+		AnimInstance->StopAllMontages(0.0f);
+	}
+
+	GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
+	SetActorEnableCollision(true);
+
+	if (HasAuthority())
+	{
+		IFPGameInterface* FPGameMode = GetWorld()->GetAuthGameMode<IFPGameInterface>();
+		if (FPGameMode)
+		{
+			FTransform NewTransform = FPGameMode->GetRandomStartTransform();
+			TeleportTo(NewTransform.GetLocation(), NewTransform.GetRotation().Rotator());
+		}
+	}
 }
 
 void AFPPlayer::SpawnPlayerHPUI()
@@ -245,6 +327,27 @@ void AFPPlayer::SetHP(float NewHP)
 	}
 }
 
+void AFPPlayer::SetIsDead(bool IsDead)
+{
+	 if (IsValid(this))
+	 {
+	 	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
+	 	{
+	 		PlayerController->DisableInput(PlayerController);
+			bIsDead = IsDead;
+
+	 		FTimerHandle DeadHandle;
+	 		GetWorldTimerManager().SetTimer(DeadHandle, this, &AFPPlayer::DestroyActor, 5.0f,  false);
+	 	}
+	 }
+
+	 IFPGameInterface* FPGameMode = GetWorld()->GetAuthGameMode<IFPGameInterface>();
+	 if (FPGameMode)
+	 {
+		FPGameMode->OnPlayerDead();
+	 }
+}
+
 void AFPPlayer::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 
@@ -274,21 +377,6 @@ void AFPPlayer::UpdatePlayerState()
 	if (AFPPlayerState* PS = GetPlayerState<AFPPlayerState>())
 	{
 		PS->SetAlive(!bIsDead);
-	}
-}
-
-void AFPPlayer::DestroyPlayer()
-{
-	if (IsValid(this))
-	{
-		if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
-		{
-			PlayerController->DisableInput(PlayerController);
-			SetIsDead(true);
-			
-			FTimerHandle DeadHandle;
-			GetWorldTimerManager().SetTimer(DeadHandle, this, &AFPPlayer::DestroyActor, 5.0f, false);
-		}
 	}
 }
 

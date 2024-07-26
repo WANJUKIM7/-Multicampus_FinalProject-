@@ -23,6 +23,9 @@ protected:
 public:
 	virtual void Tick(float DeltaTime) override;
 
+public:
+	virtual void InitializeLevelSettings() override;
+
 protected:
 	virtual void SetMappingContext() override;
 	virtual void SetSpawnValues() override;

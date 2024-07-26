@@ -13,9 +13,17 @@ void AFPLevelDerived05::BeginPlay()
 	SetSpawnValues();
 	Super::BeginPlay();
 
-	Player->SetCurrentLevel(ECurrentLevel::E_Level05);
-	Player->SetMovementAccerlation(500.0f);
-	Player->SetMovementGroundFriction(0.2f);
+	/*if (Player)
+	{
+		Player->SetCurrentLevel(ECurrentLevel::E_Level05);
+		Player->SetMovementAccerlation(500.0f);
+		Player->SetMovementDeceleration(500.0f);
+		Player->SetMovementGroundFriction(0.2f);
+	}
+	else
+	{
+		FP_LOG(LogFP, Warning, TEXT("%s"), TEXT("No Player"));
+	}*/
 
 	LevelDatas->LevelBase.PlayerSpawnLocation = FVector(0.0f, 0.0f, 0.0f);
 

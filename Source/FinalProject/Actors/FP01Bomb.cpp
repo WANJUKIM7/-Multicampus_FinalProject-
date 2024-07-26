@@ -69,7 +69,7 @@ void AFP01Bomb::Tick(float DeltaTime)
 		AFP01BombParticle* Particle = GetWorld()->SpawnActor<AFP01BombParticle>(GetActorLocation(), FRotator(0.0f, 0.0f, 0.0f));
 		if (GetAttachParentActor())
 		{
-			Cast<AFPPlayer>(GetAttachParentActor())->DestroyPlayer();
+			Cast<AFPPlayer>(GetAttachParentActor())->SetIsDead(true);
 		}
 		Destroy();
 		UE_LOG(LogTemp, Log, TEXT("Bomb Exploded!"));

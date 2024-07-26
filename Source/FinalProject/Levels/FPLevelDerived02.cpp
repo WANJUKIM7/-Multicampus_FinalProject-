@@ -20,7 +20,14 @@ void AFPLevelDerived02::BeginPlay()
 	SetSpawnValues();
 	Super::BeginPlay();
 
-	Player->SetCurrentLevel(ECurrentLevel::E_Level02);
+	//if (Player)
+	//{
+	//	Player->SetCurrentLevel(ECurrentLevel::E_Level02);
+	//}
+	//else
+	//{
+	//	FP_LOG(LogFP, Warning, TEXT("%s"), TEXT("No Player"));
+	//}
 
 	SetTimer();
 }
@@ -102,8 +109,8 @@ void AFPLevelDerived02::SetTimer()
 	FTimerHandle Phase2SpawnTimeSpotLightHandle;
 	FTimerHandle Phase3SpawnTimeSpotLightHandle;
 
-    GetWorldTimerManager().SetTimer(
-        SpawnPlayerHPUIHandle, Player.Get(), &AFPPlayer::SpawnPlayerHPUI, LevelDatas->LevelBase.TimeGameStarts, false);
+    /*GetWorldTimerManager().SetTimer(
+        SpawnPlayerHPUIHandle, Player.Get(), &AFPPlayer::SpawnPlayerHPUI, LevelDatas->LevelBase.TimeGameStarts, false);*/
 	
 	/*GetWorldTimerManager().SetTimer(
         DarkChangeHandle, this, &AFPLevelDerived02::DarkChange, TimeGameStarts, false);*/

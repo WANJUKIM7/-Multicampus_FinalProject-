@@ -15,7 +15,14 @@ void AFPLevelDerived03::BeginPlay()
 	SetSpawnValues();
 	Super::BeginPlay();
 
-	Player->SetCurrentLevel(ECurrentLevel::E_Level03);
+	//if (Player)
+	//{
+	//	Player->SetCurrentLevel(ECurrentLevel::E_Level03);
+	//}
+	//else
+	//{
+	//	FP_LOG(LogFP, Warning, TEXT("%s"), TEXT("No Player"));
+	//}
 
 	/*FTimerHandle BreakPlatformsHandle;
 

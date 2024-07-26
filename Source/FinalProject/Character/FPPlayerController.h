@@ -20,7 +20,9 @@ public:
 	AFPPlayerController(const FObjectInitializer& ObjectInitializer);
 
 protected:
+	virtual void OnPossess(APawn* InPawn) override;
 	virtual void BeginPlay() override;
+	virtual void PostNetInit() override;
 	virtual void SetupInputComponent() override;
 
 public:

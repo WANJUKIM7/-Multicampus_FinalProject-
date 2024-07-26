@@ -11,11 +11,19 @@ AFPLevelDerived01::AFPLevelDerived01()
 
 void AFPLevelDerived01::BeginPlay()
 {
+	FP_LOG(LogFP, Log, TEXT("%s"), TEXT("Begin"));
 	SetMappingContext();
 	SetSpawnValues();
 	Super::BeginPlay();
 
-	Player->SetCurrentLevel(ECurrentLevel::E_Level01);
+	/*if (Player)
+	{
+		Player->SetCurrentLevel(ECurrentLevel::E_Level01);
+	}
+	else
+	{
+		FP_LOG(LogFP, Warning, TEXT("%s"), TEXT("No Player"));
+	}*/
 
 	FTimerHandle SpawnBomb;
 
@@ -26,6 +34,41 @@ void AFPLevelDerived01::BeginPlay()
 void AFPLevelDerived01::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void AFPLevelDerived01::InitializeLevelSettings()
+{
+	FP_LOG(LogFP, Log, TEXT("%s"), TEXT("Begin"));
+	if (LevelDatas)
+    {
+        LevelDatas->LevelBase.CameraSpawnLocation = LevelDatas->Level01.CameraSpawnLocation;
+        LevelDatas->LevelBase.CameraSpawnRotation = LevelDatas->Level01.CameraSpawnRotation;
+        LevelDatas->LevelBase.PlayerSpawnLocation = LevelDatas->Level01.PlayerSpawnLocation;
+
+        FP_LOG(LogFP, Log, TEXT("Level settings loaded from LevelDatas"));
+    }
+    else
+    {
+        FP_LOG(LogFP, Warning, TEXT("LevelDatas is not set!"));
+    }
+
+    if (LevelDatas && LevelDatas->LevelBase.TimeGameStarts > 0)
+    {
+        FTimerHandle SpawnBombTimerHandle;
+        GetWorldTimerManager().SetTimer(
+            SpawnBombTimerHandle,
+            this,
+            &AFPLevelDerived01::SpawnBomb,
+            LevelDatas->LevelBase.TimeGameStarts,
+            false
+        );
+
+        FP_LOG(LogFP, Log, TEXT("SpawnBomb timer set for %f seconds"), LevelDatas->LevelBase.TimeGameStarts);
+    }
+    else
+    {
+        FP_LOG(LogFP, Warning, TEXT("Invalid TimeGameStarts value or LevelDatas not set"));
+    }
 }
 
 void AFPLevelDerived01::SetMappingContext()
@@ -48,9 +91,9 @@ void AFPLevelDerived01::SpawnBomb()
 	//Bomb = Cast<FP01Bomb>(GetWorld()->SpawnActor(BombClass));
 	if (Bomb = GetWorld()->SpawnActor<AFP01Bomb>())
 	{
-		Bomb->AttachToComponent(Player.Get()->GetMesh(),FAttachmentTransformRules::KeepRelativeTransform, FName("bomb"));
+		/*Bomb->AttachToComponent(Player.Get()->GetMesh(),FAttachmentTransformRules::KeepRelativeTransform, FName("bomb"));
 		Player->SetIsAttachedBomb(true);
-		Player->SetViewReduction();
+		Player->SetViewReduction();*/
 	}
 	else
 	{

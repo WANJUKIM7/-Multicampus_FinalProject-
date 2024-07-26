@@ -10,10 +10,20 @@
 #include "FPGameplayTags.h"
 #include "FPCharacter.h"
 #include "FPPlayer.h"
+#include "FPLogChannels.h"
 
 AFPPlayerController::AFPPlayerController(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
+}
+
+void AFPPlayerController::OnPossess(APawn* InPawn)
+{
+	FP_LOG(LogFP, Log, TEXT("%s %s"), TEXT("Begin"), *GetName());
+
+	Super::OnPossess(InPawn);
+
+	FP_LOG(LogFP, Log, TEXT("%s"), TEXT("End"));
 }
 
 void AFPPlayerController::BeginPlay()
@@ -27,6 +37,25 @@ void AFPPlayerController::BeginPlay()
 			Subsystem->AddMappingContext(InputData->IMC_Quater, 0);
 		}
 	}
+}
+
+void AFPPlayerController::PostNetInit()
+{
+	FP_LOG(LogFP, Log, TEXT("%s %s"), TEXT("Begin"), *GetName());
+
+	Super::PostNetInit();
+
+	UNetDriver* NetDriver = GetNetDriver();
+	if (NetDriver)
+	{
+		FP_LOG(LogFP, Log, TEXT("Server Connection : %s"), *NetDriver->ServerConnection->GetName());
+	}
+	else
+	{
+		FP_LOG(LogFP, Log, TEXT("%s"), TEXT("No NetDriver"));
+	}
+
+	FP_LOG(LogFP, Log, TEXT("%s"), TEXT("End"));
 }
 
 void AFPPlayerController::SetupInputComponent()

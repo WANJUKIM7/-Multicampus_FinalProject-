@@ -9,6 +9,7 @@
 #include "Character/FPPlayer.h"
 #include "Data/FPLevelDatas.h"
 #include "GameMode/FPGameState.h"
+#include "../FPLogChannels.h"
 #include "FPLevelBase.generated.h"
 
 /**
@@ -28,6 +29,9 @@ protected:
 public:
 	virtual void Tick(float DeltaTime) override;
 
+public:
+	virtual void InitializeLevelSettings();
+
 protected:
 	class AFPPlayer* GetPlayerFromGameMode();
 	void StartFadeIn();
@@ -43,8 +47,8 @@ protected:
 	void PlayerControlable();
 	void CheckGameState();
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	TObjectPtr<class AFPPlayer> Player = nullptr;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	//TObjectPtr<class AFPPlayer> Player = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<class ACameraActor> Camera = nullptr;
